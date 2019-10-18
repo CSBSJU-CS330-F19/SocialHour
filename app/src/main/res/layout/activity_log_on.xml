@@ -39,10 +39,18 @@
 
         <Button
             android:id="@+id/logOnbutton"
-            android:layout_width="400dp"
-            android:layout_height="57dp"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
             android:background="@drawable/button_background"
             android:text="Log On" />
+
+        <Button
+            android:id="@+id/createAccount"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_background"
+            android:text="Create Account" />
 
     </LinearLayout>
 

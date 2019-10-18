@@ -28,6 +28,7 @@ public class LogOn extends AppCompatActivity {
     EditText passwordInput;
 
     Button logOnButton;
+    Button createAccountButton;
 
     private FirebaseAuth mAuth;
 
@@ -40,8 +41,16 @@ public class LogOn extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.password);
 
         logOnButton = (Button) findViewById(R.id.logOnbutton);
+        createAccountButton = (Button) findViewById(R.id.createAccount);
 
         mAuth = FirebaseAuth.getInstance();
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),CreateAccount.class));
+            }
+        });
 
         logOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
