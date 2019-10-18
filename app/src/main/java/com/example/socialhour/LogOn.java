@@ -1,13 +1,24 @@
 package com.example.socialhour;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Button;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
-import android.os.Bundle;
+
 
 public class LogOn extends AppCompatActivity {
 
@@ -18,6 +29,8 @@ public class LogOn extends AppCompatActivity {
 
     Button logOnButton;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,30 +40,35 @@ public class LogOn extends AppCompatActivity {
         passwordInput = (EditText) findViewById(R.id.password);
 
         logOnButton = (Button) findViewById(R.id.logOnbutton);
+
+        mAuth = FirebaseAuth.getInstance();
+
         logOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = usernameInput.getText().toString();
-                password = passwordInput.getText().toString();
-                boolean loggedOn = validateCredientials(username, password);
-                if(loggedOn){
-                    openHomeScreen();
-                }else{
-                    ///display some error that incorrect information was given
-                }
+                username = usernameInput.getText().toString().trim();
+                password = passwordInput.getText().toString().trim();
+
+                mAuth.signInWithEmailAndPassword(username, password)
+                        .addOnCompleteListener(LogOn.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                    
+                                } else {
+                                    Toast.makeText(LogOn.this, "Login Failed or User Not Available", Toast.LENGTH_SHORT).show();
+                                }
+
+                                // ...
+                            }
+                        });
             }
         });
     }
 
-    public boolean validateCredientials(String u, String p){
-        /////validate the username exists and the password is correct
-        return true;
-    }
 
-    public void openHomeScreen(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 }
 
 
