@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import java.util.*;
 import com.example.DataTypes.User;
 import com.example.services.DBConnection;
+import com.google.firebase.database.DataSnapshot;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class PendingGroups extends AppCompatActivity {
         DBConnection dbc = LogOn.dbc;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_groups);
+        DataSnapshot pGroupsSnap = dbc.getGroupsSnapshot();
 
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
 
@@ -36,11 +38,8 @@ public class PendingGroups extends AppCompatActivity {
 
         for (int i = 0; i < pendingGroups.size(); i++){
             Button button = new Button(this);
-            button.setText(pendingGroups.get(i));
+            button.setText(pGroupsSnap.child(pendingGroups.get(i)).child("name").getValue(String.class));
             button.setLayoutParams(params);
-            button.setId(i);
-            //set android:background="@android:drawable/screen_background_light_transparent"
-            button.setBackground(Drawable.createFromPath("@android:drawable/screen_background_light_transparent"));
             button.setTextSize(30);
 
             button.setOnClickListener(new View.OnClickListener() {
