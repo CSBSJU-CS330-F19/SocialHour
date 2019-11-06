@@ -14,10 +14,11 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import com.example.DataTypes.User;
 
 public class GroupsPage extends AppCompatActivity {
 
-    Button createGroup, viewPending, group;
+    Button createGroup, viewPending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +54,8 @@ public class GroupsPage extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        ArrayList<String> groups = new ArrayList<String>(Arrays.asList("Group1", "Group2", "Group3", "Group4", "Group5"
-                , "Group2", "Group3", "Group4", "Group5", "Group2", "Group3", "Group4", "Group5"));
+        User currentUser = dbc.getCurrentUser();
+        ArrayList<String> groups = currentUser.getGroups();
 
 
         for (int i = 0; i < groups.size(); i++){

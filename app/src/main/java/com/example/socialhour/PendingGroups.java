@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import java.util.*;
+import com.example.DataTypes.User;
+import com.example.services.DBConnection;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +22,15 @@ public class PendingGroups extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DBConnection dbc = LogOn.dbc;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_groups);
 
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
 
-        //User currentUser = dbConnection.getUser();
-        //ArrayList<String> pendingGroups = currentUser.getPending();
+        User currentUser = dbc.getCurrentUser();
+        ArrayList<String> pendingGroups = currentUser.getPendingGroups();
 
-        ArrayList<String> pendingGroups = new ArrayList<String>(Arrays.asList("PendGroup1", "PendGroup2", "PendGroup3", "PendGroup4", "PendGroup5"
-                , "PendGroup2", "PendGroup3", "PendGroup4", "PendGroup5", "PendGroup2", "PendGroup3", "PendGroup4", "PendGroup5"));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
