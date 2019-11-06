@@ -18,8 +18,9 @@ import static android.content.ContentValues.TAG;
 public class DBConnection {
 
     private DatabaseReference db;
-    public User currentUser;
+    private User currentUser;
     private DataSnapshot userDataSnapshot;
+    private DataSnapshot groupsSnapshot;
 
     public DBConnection(){
         this.db = FirebaseDatabase.getInstance().getReference();
@@ -49,8 +50,9 @@ public class DBConnection {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                setUserDataSnapshot(dataSnapshot);
-                DataSnapshot userSnap = dataSnapshot.child(userKey);
+                setGroupsSnapshot(dataSnapshot.child("Groups"));
+                setUserDataSnapshot(dataSnapshot.child("Users"));
+                DataSnapshot userSnap = dataSnapshot.child("Users").child(userKey);
                 currentUser = new User(userSnap.child("firstName").getValue().toString(), userSnap.child("email").getValue().toString(), userSnap.child("password").getValue().toString(),
                         (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("PendingGroups").getValue());
                 System.out.println("name : " + currentUser.getFirstName());
@@ -67,7 +69,7 @@ public class DBConnection {
                 // ...
             }
         };
-        db.child("Users/").addValueEventListener(readDB);
+        db.addValueEventListener(readDB);
     }
 
     public void setCurrentUser (User u){
@@ -91,5 +93,13 @@ public class DBConnection {
 
     public DataSnapshot getUserDataSnapshot(){
         return userDataSnapshot;
+    }
+
+    public void setGroupsSnapshot (DataSnapshot d){
+        groupsSnapshot = d;
+    }
+
+    public DataSnapshot getGroupsSnapshot(){
+        return groupsSnapshot;
     }
 }

@@ -29,9 +29,9 @@ public class GroupsPage extends AppCompatActivity {
         viewPending = (Button) findViewById(R.id.pendingGroups);
 
         //System.out.println("NAME: " + dbc.getCurrentUser().getFirstName());
-        DataSnapshot users = dbc.getUserDataSnapshot();
-        for(DataSnapshot snapshot : users.getChildren()){
-            System.out.println(snapshot.child("email").getValue(String.class));
+        DataSnapshot groupsSnap = dbc.getGroupsSnapshot();
+        for(DataSnapshot snapshot : groupsSnap.getChildren()){
+            System.out.println(snapshot.child("name").getValue(String.class));
         }
 
         createGroup.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +62,6 @@ public class GroupsPage extends AppCompatActivity {
             button.setText(groups.get(i));
             button.setLayoutParams(params);
             button.setId(i);
-            //set android:background="@android:drawable/screen_background_light_transparent"
-            button.setBackground(Drawable.createFromPath("@android:drawable/screen_background_light_transparent"));
             button.setTextSize(30);
 
             button.setOnClickListener(new View.OnClickListener() {
