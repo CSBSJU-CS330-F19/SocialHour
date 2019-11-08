@@ -14,11 +14,14 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import com.example.DataTypes.User;
+
+import com.example.DataTypes.*;
 
 public class GroupsPage extends AppCompatActivity {
 
     Button createGroup, viewPending;
+    static String selectedGroup;
+    static DataSnapshot groupsSnap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class GroupsPage extends AppCompatActivity {
         viewPending = (Button) findViewById(R.id.pendingGroups);
 
 
-        DataSnapshot groupsSnap = dbc.getGroupsSnapshot();
+        groupsSnap = dbc.getGroupsSnapshot();
 
 
         createGroup.setOnClickListener(new View.OnClickListener() {
@@ -53,11 +56,11 @@ public class GroupsPage extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
         User currentUser = dbc.getCurrentUser();
-        ArrayList<String> groups = currentUser.getGroups();
+        final ArrayList<String> groups = currentUser.getGroups();
 
 
         for (int i = 0; i < groups.size(); i++){
-            Button button = new Button(this);
+            final Button button = new Button(this);
             button.setText(groupsSnap.child(groups.get(i)).child("name").getValue(String.class));
             button.setLayoutParams(params);
             button.setId(i);
@@ -66,6 +69,8 @@ public class GroupsPage extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int x = button.getId();
+                    setSelectedGroup(groups.get(x));
                     startActivity(new Intent(getApplicationContext(),SingleGroupPage.class));
                 }
             });
@@ -73,6 +78,16 @@ public class GroupsPage extends AppCompatActivity {
             linearLayout.addView(button);
 
         }
+    }
+
+    public void setSelectedGroup(String id){
+        selectedGroup = id;
+    }
+
+    public static Group getSelectedGroup(){
+        Group returnGroup = new Group(groupsSnap.child(selectedGroup).child("name").getValue(String.class), selectedGroup,
+                (ArrayList<String>)groupsSnap.child(selectedGroup).child("Groups").getValue(), (ArrayList<String>)groupsSnap.child(selectedGroup).child("PendingGroups").getValue());
+        return returnGroup;
     }
 
 

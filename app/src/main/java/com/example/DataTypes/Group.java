@@ -15,6 +15,17 @@ public class Group {
         this.id = id;
     }
 
+    public Group(String name, String id, ArrayList<String> events, ArrayList<String> members) {
+        this.name = name;
+        this.id = id;
+        if(events != null){
+            this.events = events;
+        }
+        if(members != null){
+            this.members = members;
+        }
+    }
+
     public void addUser(String userID){
         members.add(userID);
     }
