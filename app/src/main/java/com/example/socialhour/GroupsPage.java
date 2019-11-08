@@ -84,9 +84,11 @@ public class GroupsPage extends AppCompatActivity {
         selectedGroup = id;
     }
 
+
+    //Change once events field is populated in db
     public static Group getSelectedGroup(){
-        Group returnGroup = new Group(groupsSnap.child(selectedGroup).child("name").getValue(String.class), selectedGroup,
-                (ArrayList<String>)groupsSnap.child(selectedGroup).child("Groups").getValue(), (ArrayList<String>)groupsSnap.child(selectedGroup).child("PendingGroups").getValue());
+        Group returnGroup = new Group(groupsSnap.child(selectedGroup).child("name").getValue(String.class), selectedGroup, new ArrayList<String>(),
+                (ArrayList<String>)groupsSnap.child(selectedGroup).child("members").getValue());
         return returnGroup;
     }
 

@@ -25,8 +25,12 @@ public class SingleGroupPage extends AppCompatActivity {
         setContentView(R.layout.activity_single_group_page);
         LinearLayout groupMembers = findViewById(R.id.groupMembers);
         dbc = LogOn.dbc;
+
         addMember = findViewById(R.id.pendingGroups);
+
         selectedGroup = GroupsPage.getSelectedGroup();
+        System.out.println(selectedGroup.getName());
+        System.out.println(selectedGroup.getMembers().get(0));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         ArrayList<String> members = selectedGroup.getMembers();
