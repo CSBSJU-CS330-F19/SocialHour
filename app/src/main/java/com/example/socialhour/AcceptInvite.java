@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.services.DBConnection;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class AcceptInvite extends AppCompatActivity {
 
@@ -23,6 +29,13 @@ public class AcceptInvite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept_invite);
 
+        DataSnapshot groupsSnap = LogOn.dbc.getGroupsSnapshot();
+        String id =  PendingGroups.selectedGroup;
+        String displayName = groupsSnap.child(id).child("name").getValue(String.class);
+
+        TextView name = findViewById(R.id.textView10);
+        name.setText(displayName);
+
         accept = findViewById(R.id.button);
         refuse = findViewById(R.id.button2);
         dbc = LogOn.dbc;
@@ -32,9 +45,10 @@ public class AcceptInvite extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), ""+R.id.textView10,
                         Toast.LENGTH_LONG).show();
-                //moveFromPendingToGroups(String.valueOf(R.id.textView10));
-               // addUserToGroup(MainActivity.name);
-                //startActivity(new Intent(getApplicationContext(), PendingGroups.class));
+                ArrayList<String> pendingGroups = dbc.getCurrentUser().getPendingGroups();
+                pendingGroups.remove(PendingGroups.selectedGroup);
+                dbc.acceptInvite(PendingGroups.selectedGroup, pendingGroups);
+                startActivity(new Intent(getApplicationContext(), GroupsPage.class));
             }
         });
 
@@ -42,31 +56,16 @@ public class AcceptInvite extends AppCompatActivity {
             @Override
             public void onClick(View w) {
                 //removeFromPending(String.valueOf(R.id.textView10));
-                startActivity(new Intent(getApplicationContext(), PendingGroups.class));
+                ArrayList<String> pendingGroups = dbc.getCurrentUser().getPendingGroups();
+                pendingGroups.remove(PendingGroups.selectedGroup);
+                dbc.refuseInvite(PendingGroups.selectedGroup, pendingGroups);
+                startActivity(new Intent(getApplicationContext(), GroupsPage.class));
             }
         });
 
 
 
     }
-
-    /*public void moveFromPendingToGroups(String group){
-        databaseReference.child("Users").child("groups").child("name").setValue(group);
-        databaseReference.child("Users").child("pendingGroups").child(group).removeValue();
-
-    }
-
-    public void addUserToGroup(String username){
-        databaseReference.child("Groups").child("members").setValue(username);
-        Toast.makeText(this, "User successfully added to Group", Toast.LENGTH_LONG)
-                .show();
-    }
-
-    public void removeFromPending(String groupToRemove){
-        databaseReference.child("Users").child("pendingGroups").child(groupToRemove).removeValue();
-        Toast.makeText(this, "Group removed from the list of pending groups",
-                Toast.LENGTH_LONG).show();
-    }*/
 
 
 }

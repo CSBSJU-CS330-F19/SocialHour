@@ -38,8 +38,8 @@ public class SingleGroupPage extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         ArrayList<String> members = selectedGroup.getMembers();
-        TextView member = new TextView(this);
         for(String name: members){
+            TextView member = new TextView(this);
             member.setText(name);
             member.setLayoutParams(params);
             member.setTextSize(20);

@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 public class PendingGroups extends AppCompatActivity {
 
+    static String selectedGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DBConnection dbc = LogOn.dbc;
@@ -31,20 +33,23 @@ public class PendingGroups extends AppCompatActivity {
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
 
         User currentUser = dbc.getCurrentUser();
-        ArrayList<String> pendingGroups = currentUser.getPendingGroups();
+        final ArrayList<String> pendingGroups = currentUser.getPendingGroups();
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
         for (int i = 0; i < pendingGroups.size(); i++){
-            Button button = new Button(this);
+            final Button button = new Button(this);
             button.setText(GroupsSnap.child(pendingGroups.get(i)).child("name").getValue(String.class));
             button.setLayoutParams(params);
             button.setTextSize(30);
+            button.setId(i);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int x = button.getId();
+                    setSelectedGroup(pendingGroups.get(x));
                     startActivity(new Intent(getApplicationContext(),AcceptInvite.class));
                 }
             });
@@ -52,5 +57,9 @@ public class PendingGroups extends AppCompatActivity {
             linearLayout.addView(button);
 
         }
+    }
+
+    public void setSelectedGroup(String id){
+        selectedGroup = id;
     }
 }
