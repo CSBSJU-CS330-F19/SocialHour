@@ -64,7 +64,7 @@ public class LogOn extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    dbc.getUser(username);
+                                    dbc.updateCurrentUser(username);
                                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
                                 } else {

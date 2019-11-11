@@ -58,7 +58,7 @@ public class AcceptInvite extends AppCompatActivity {
                 //removeFromPending(String.valueOf(R.id.textView10));
                 ArrayList<String> pendingGroups = dbc.getCurrentUser().getPendingGroups();
                 pendingGroups.remove(PendingGroups.selectedGroup);
-                dbc.refuseInvite(PendingGroups.selectedGroup, pendingGroups);
+                dbc.refuseInvite(pendingGroups);
                 startActivity(new Intent(getApplicationContext(), GroupsPage.class));
             }
         });

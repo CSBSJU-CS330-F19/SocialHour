@@ -47,8 +47,8 @@ public class CreateGroup extends AppCompatActivity {
                 newGroup.addUser(uniqueID);
                 currentUser.addGroup(groupID);
 
-                dbConnection.addGroupToUser(currentUser, groupID);
-                dbConnection.addUserToGroup(uniqueID, newGroup);
+                dbConnection.addGroupToUser(currentUser);
+                dbConnection.addUserToGroup(newGroup);
 
                 dbConnection.addGroupToDB(newGroup, groupID);
 
