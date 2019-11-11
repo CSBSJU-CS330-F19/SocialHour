@@ -39,7 +39,12 @@ public class User {
         }
     }
 
-
+    /*creates a key for a user object based on their email.
+    * Firebase does not accept "@" or "." as the name of a node so these are stripped and replaced*/
+    public static String getUserKey(String email){
+        int indexOfAt = email.indexOf("@");
+        return email.substring(0, indexOfAt).replace('.', '-');
+    }
 
 
     public String getEmail() {
@@ -89,9 +94,4 @@ public class User {
     public void setEventsList(ArrayList<Event> eventsList) { this.eventsList = eventsList; }
 
     public ArrayList<Event> getEventsList() { return eventsList; }
-
-    public static String getUserKey(String email){
-        int indexOfAt = email.indexOf("@");
-        return email.substring(0, indexOfAt).replace('.', '-');
-    }
 }
