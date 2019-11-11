@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.services.DBConnection;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -15,8 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AcceptInvite extends AppCompatActivity {
 
     private Button accept, refuse;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
+    DBConnection dbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +25,7 @@ public class AcceptInvite extends AppCompatActivity {
 
         accept = findViewById(R.id.button);
         refuse = findViewById(R.id.button2);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
+        dbc = LogOn.dbc;
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +41,7 @@ public class AcceptInvite extends AppCompatActivity {
         refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View w) {
-                removeFromPending(String.valueOf(R.id.textView10));
+                //removeFromPending(String.valueOf(R.id.textView10));
                 startActivity(new Intent(getApplicationContext(), PendingGroups.class));
             }
         });
@@ -51,7 +50,7 @@ public class AcceptInvite extends AppCompatActivity {
 
     }
 
-    public void moveFromPendingToGroups(String group){
+    /*public void moveFromPendingToGroups(String group){
         databaseReference.child("Users").child("groups").child("name").setValue(group);
         databaseReference.child("Users").child("pendingGroups").child(group).removeValue();
 
@@ -67,7 +66,7 @@ public class AcceptInvite extends AppCompatActivity {
         databaseReference.child("Users").child("pendingGroups").child(groupToRemove).removeValue();
         Toast.makeText(this, "Group removed from the list of pending groups",
                 Toast.LENGTH_LONG).show();
-    }
+    }*/
 
 
 }

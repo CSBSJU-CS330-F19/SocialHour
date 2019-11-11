@@ -26,7 +26,7 @@ public class PendingGroups extends AppCompatActivity {
         DBConnection dbc = LogOn.dbc;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_groups);
-        DataSnapshot pGroupsSnap = dbc.getGroupsSnapshot();
+        DataSnapshot GroupsSnap = dbc.getGroupsSnapshot();
 
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
 
@@ -38,7 +38,7 @@ public class PendingGroups extends AppCompatActivity {
 
         for (int i = 0; i < pendingGroups.size(); i++){
             Button button = new Button(this);
-            button.setText(pGroupsSnap.child(pendingGroups.get(i)).child("name").getValue(String.class));
+            button.setText(GroupsSnap.child(pendingGroups.get(i)).child("name").getValue(String.class));
             button.setLayoutParams(params);
             button.setTextSize(30);
 

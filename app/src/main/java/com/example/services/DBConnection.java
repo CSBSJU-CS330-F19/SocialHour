@@ -40,6 +40,14 @@ public class DBConnection {
         db.child("Users").child(User.getUserKey(user.getEmail())).child("Groups").setValue(user.getGroups());
     }
 
+    public void addPendingGroupToUser(String userID, ArrayList<String> pendingGroups){
+        db.child("Users").child(userID).child("pendingGroups").setValue(pendingGroups);
+    }
+
+    public ArrayList<String> getPendingGroups(String userID){
+        return (ArrayList<String>) userDataSnapshot.child(userID).child("pendingGroups").getValue();
+    }
+
     public void addUserToGroup(String userID, Group group){
         db.child("Groups").child(group.getId()).child("members").setValue(group.getMembers());
     }
@@ -54,7 +62,7 @@ public class DBConnection {
                 setUserDataSnapshot(dataSnapshot.child("Users"));
                 DataSnapshot userSnap = dataSnapshot.child("Users").child(userKey);
                 currentUser = new User(userSnap.child("firstName").getValue().toString(), userSnap.child("email").getValue().toString(), userSnap.child("password").getValue().toString(),
-                        (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("PendingGroups").getValue());
+                        (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("pendingGroups").getValue());
                 System.out.println("name : " + currentUser.getFirstName());
                 System.out.println("email : " + currentUser.getEmail());
                 System.out.println("password : " + currentUser.getPassword());
