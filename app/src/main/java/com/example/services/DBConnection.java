@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
@@ -50,6 +51,32 @@ public class DBConnection {
 
     public void addUserToGroup(String userID, Group group){
         db.child("Groups").child(group.getId()).child("members").setValue(group.getMembers());
+    }
+
+    public void acceptInvite (String groupID, ArrayList<String> pendingGroups){
+        db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("pendingGroups").setValue(pendingGroups);
+        ArrayList<String> groups = currentUser.getGroups();
+        if (groups == null){
+            groups = new ArrayList<String>();
+        }
+        groups.add(groupID);
+        currentUser.setGroups(groups);
+        db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("Groups").setValue(currentUser.getGroups());
+        Group newGroup = getGroup(groupID);
+        newGroup.addUser(User.getUserKey(currentUser.getEmail()));
+        addUserToGroup(User.getUserKey(currentUser.getEmail()), newGroup);
+    }
+
+    public void refuseInvite (String groupID, ArrayList<String> pendingGroups){
+        db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("pendingGroups").setValue(pendingGroups);
+    }
+
+    public Group getGroup (String groupId){
+        Group retGroup = new Group(groupsSnapshot.child(groupId).child("name").getValue().toString(),
+                groupsSnapshot.child(groupId).child("id").getValue().toString(),
+                (ArrayList<String>) groupsSnapshot.child(groupId).child("events").getValue(),
+                (ArrayList<String>) groupsSnapshot.child(groupId).child("members").getValue());
+        return retGroup;
     }
 
     public void getUser(String email){
