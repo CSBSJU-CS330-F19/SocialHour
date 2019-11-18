@@ -55,10 +55,15 @@ public class CreateAccount extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     dbc.addUserToDB(newUser);
+                                    Toast.makeText(CreateAccount.this,
+                                            "Your account has been successfully created",
+                                            Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), LogOn.class));
 
                                 } else {
-                                    Toast.makeText(CreateAccount.this, "Account already exists with that email address", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CreateAccount.this,
+                                            "Account already exists with that email address",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

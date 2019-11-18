@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.DataTypes.*;
 import com.example.services.DBConnection;
@@ -67,6 +68,8 @@ public class SingleGroupPage extends AppCompatActivity {
                         }
                         System.out.println("current p Groups: " + currentPendingGroups.get(0));
                         dbc.addPendingGroupToUser(userId, currentPendingGroups);
+                        Toast.makeText(SingleGroupPage.this, "An invite has been sent to "+username,
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
                 System.out.println("entered a bad username");

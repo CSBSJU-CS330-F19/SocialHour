@@ -43,8 +43,6 @@ public class AcceptInvite extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), ""+R.id.textView10,
-                        Toast.LENGTH_LONG).show();
                 ArrayList<String> pendingGroups = dbc.getCurrentUser().getPendingGroups();
                 pendingGroups.remove(PendingGroups.selectedGroup);
                 dbc.acceptInvite(PendingGroups.selectedGroup, pendingGroups);
