@@ -22,6 +22,7 @@ public class SingleGroupPage extends AppCompatActivity {
     Group selectedGroup;
     DBConnection dbc;
     private EditText usernameInput;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +53,40 @@ public class SingleGroupPage extends AppCompatActivity {
             public void onClick(View v) {
                 System.out.println("HELLO");
                 //read in name entered
-                String username = usernameInput.getText().toString().trim();
-                DataSnapshot users = dbc.getUserDataSnapshot();
-                String userId = User.getUserKey(username);
-                for(DataSnapshot user: users.getChildren()){
-                    //System.out.println(user.getValue().toString());
-                    if(user.child("email").getValue().toString().equals(username)){
-                        ArrayList<String> currentPendingGroups = dbc.getPendingGroups(userId);
-                        if(currentPendingGroups == null) {
-                            currentPendingGroups = new ArrayList<String>();
-                            currentPendingGroups.add(selectedGroup.getId());
+
+
+                try {
+                    username = usernameInput.getText().toString().trim();
+                    DataSnapshot users = dbc.getUserDataSnapshot();
+                    String userId = User.getUserKey(username);
+                    for (DataSnapshot user : users.getChildren()) {
+                        //System.out.println(user.getValue().toString());
+                        if (user.child("email").getValue().toString().equals(username)) {
+                            ArrayList<String> currentPendingGroups = dbc.getPendingGroups(userId);
+                            if (currentPendingGroups == null) {
+                                currentPendingGroups = new ArrayList<String>();
+                                currentPendingGroups.add(selectedGroup.getId());
+                            } else {
+                                if(!currentPendingGroups.contains(selectedGroup.getId())) {
+                                    currentPendingGroups.add(selectedGroup.getId());
+                                }
+                                else{
+                                    Toast.makeText(SingleGroupPage.this, "Invite already sent to " + username,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            //System.out.println("current p Groups: " + currentPendingGroups.get(0));
+                            dbc.addPendingGroupToUser(userId, currentPendingGroups);
+                            Toast.makeText(SingleGroupPage.this, "An invite has been sent to " + username,
+                                    Toast.LENGTH_SHORT).show();
                         }
-                        else{
-                            currentPendingGroups.add(selectedGroup.getId());
-                        }
-                        System.out.println("current p Groups: " + currentPendingGroups.get(0));
-                        dbc.addPendingGroupToUser(userId, currentPendingGroups);
-                        Toast.makeText(SingleGroupPage.this, "An invite has been sent to "+username,
-                                Toast.LENGTH_SHORT).show();
                     }
+                } catch(Exception e){
+                    Toast.makeText(SingleGroupPage.this, "The username you entered does not exist",
+                            Toast.LENGTH_SHORT).show();
                 }
-                System.out.println("entered a bad username");
+
+                //System.out.println("entered a bad username");
 
 
             }
