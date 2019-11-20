@@ -25,7 +25,7 @@ public class PendingGroups extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DBConnection dbc = LogOn.dbc;
+        DBConnection dbc = DBConnection.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_groups);
         DataSnapshot GroupsSnap = dbc.getGroupsSnapshot();

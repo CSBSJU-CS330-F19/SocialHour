@@ -18,12 +18,19 @@ import static android.content.ContentValues.TAG;
 
 public class DBConnection {
 
+    private static DBConnection dbConnection;
     private DatabaseReference db;
     private User currentUser;
     private DataSnapshot userDataSnapshot;
     private DataSnapshot groupsSnapshot;
 
-    public DBConnection(){
+    public static DBConnection getInstance(){
+        if(dbConnection == null){
+            dbConnection = new DBConnection();
+        }
+        return dbConnection;
+    }
+    private DBConnection(){
         this.db = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -32,41 +39,41 @@ public class DBConnection {
     */
     public void addUserToDB(User newUser){
         String uniqueId = User.getUserKey(newUser.getEmail());
-        db.child("Users").child(uniqueId).setValue(newUser);
+        dbConnection.db.child("Users").child(uniqueId).setValue(newUser);
     }
 
     /*Adds a new group entry in the database, takes a group and a unique id.
     * The group is stored in the database as "Groups/uuid/group object"
     */
     public void addGroupToDB(Group newGroup, String uuID){
-        db.child("Groups").child(uuID).setValue(newGroup);
+        dbConnection.db.child("Groups").child(uuID).setValue(newGroup);
     }
 
     /*adds a group id to the groups child of a user object in the database.
     * Stored at "Users/userKey/Groups
     */
     public void addGroupToUser(User user){
-        db.child("Users").child(User.getUserKey(user.getEmail())).child("Groups").setValue(user.getGroups());
+        dbConnection.db.child("Users").child(User.getUserKey(user.getEmail())).child("Groups").setValue(user.getGroups());
     }
 
     /*adds a group id to the pendingGroups child of a user object in the database.
      * Stored at "Users/userKey/pendingGroups
      */
     public void addPendingGroupToUser(String userID, ArrayList<String> pendingGroups){
-        db.child("Users").child(userID).child("pendingGroups").setValue(pendingGroups);
+        dbConnection.db.child("Users").child(userID).child("pendingGroups").setValue(pendingGroups);
     }
 
     /*returns a users pending groups
      */
     public ArrayList<String> getPendingGroups(String userID){
-        return (ArrayList<String>) userDataSnapshot.child(userID).child("pendingGroups").getValue();
+        return (ArrayList<String>) dbConnection.userDataSnapshot.child(userID).child("pendingGroups").getValue();
     }
 
     /*adds a user key to a group object by taking a new group that includes the new member
      * Stored at "Groups/uuid/members"
      */
     public void addUserToGroup(Group group){
-        db.child("Groups").child(group.getId()).child("members").setValue(group.getMembers());
+        dbConnection.db.child("Groups").child(group.getId()).child("members").setValue(group.getMembers());
     }
 
     /*sets a new pending group child in the db of the user object that no longer includes the accepted group.
@@ -74,32 +81,32 @@ public class DBConnection {
     * Calls addUserToGroup to add the current user to the group that invited them
     */
     public void acceptInvite (String groupID, ArrayList<String> pendingGroups){
-        db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("pendingGroups").setValue(pendingGroups);
-        ArrayList<String> groups = currentUser.getGroups();
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("pendingGroups").setValue(pendingGroups);
+        ArrayList<String> groups = dbConnection.currentUser.getGroups();
         if (groups == null){
             groups = new ArrayList<String>();
         }
         groups.add(groupID);
-        currentUser.setGroups(groups);
-        db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("Groups").setValue(currentUser.getGroups());
+        dbConnection.currentUser.setGroups(groups);
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("Groups").setValue(dbConnection.currentUser.getGroups());
         Group newGroup = getGroup(groupID);
-        newGroup.addUser(User.getUserKey(currentUser.getEmail()));
+        newGroup.addUser(User.getUserKey(dbConnection.currentUser.getEmail()));
         addUserToGroup(newGroup);
     }
 
     /* removes the rejected group from the users list of pending groups
     */
     public void refuseInvite (ArrayList<String> pendingGroups){
-        db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("pendingGroups").setValue(pendingGroups);
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("pendingGroups").setValue(pendingGroups);
     }
 
     /*returns the requested group object from the db.
     */
     public Group getGroup (String groupId){
-        Group retGroup = new Group(groupsSnapshot.child(groupId).child("name").getValue().toString(),
-                groupsSnapshot.child(groupId).child("id").getValue().toString(),
-                (ArrayList<String>) groupsSnapshot.child(groupId).child("events").getValue(),
-                (ArrayList<String>) groupsSnapshot.child(groupId).child("members").getValue());
+        Group retGroup = new Group(dbConnection.groupsSnapshot.child(groupId).child("name").getValue().toString(),
+                dbConnection.groupsSnapshot.child(groupId).child("id").getValue().toString(),
+                (ArrayList<String>) dbConnection.groupsSnapshot.child(groupId).child("events").getValue(),
+                (ArrayList<String>) dbConnection.groupsSnapshot.child(groupId).child("members").getValue());
         return retGroup;
     }
 
@@ -113,9 +120,9 @@ public class DBConnection {
                 setGroupsSnapshot(dataSnapshot.child("Groups"));
                 setUserDataSnapshot(dataSnapshot.child("Users"));
                 DataSnapshot userSnap = dataSnapshot.child("Users").child(userKey);
-                currentUser = new User(userSnap.child("firstName").getValue().toString(), userSnap.child("email").getValue().toString(), userSnap.child("password").getValue().toString(),
+                dbConnection.currentUser = new User(userSnap.child("firstName").getValue().toString(), userSnap.child("email").getValue().toString(), userSnap.child("password").getValue().toString(),
                         (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("pendingGroups").getValue());
-                setCurrentUser(currentUser);
+                setCurrentUser(dbConnection.currentUser);
 
             }
 
@@ -126,30 +133,30 @@ public class DBConnection {
                 // ...
             }
         };
-        db.addValueEventListener(readDB);
+        dbConnection.db.addValueEventListener(readDB);
     }
 
     public void setCurrentUser (User u){
-        currentUser = u;
+        dbConnection.currentUser = u;
     }
 
     public User getCurrentUser(){
-        return currentUser;
+        return dbConnection.currentUser;
     }
 
     public void setUserDataSnapshot (DataSnapshot d){
-        userDataSnapshot = d;
+        dbConnection.userDataSnapshot = d;
     }
 
     public DataSnapshot getUserDataSnapshot(){
-        return userDataSnapshot;
+        return dbConnection.userDataSnapshot;
     }
 
     public void setGroupsSnapshot (DataSnapshot d){
-        groupsSnapshot = d;
+        dbConnection.groupsSnapshot = d;
     }
 
     public DataSnapshot getGroupsSnapshot(){
-        return groupsSnapshot;
+        return dbConnection.groupsSnapshot;
     }
 }

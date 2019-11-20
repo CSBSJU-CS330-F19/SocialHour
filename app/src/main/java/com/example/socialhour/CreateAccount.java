@@ -39,7 +39,7 @@ public class CreateAccount extends AppCompatActivity {
         passwordCreate = findViewById(R.id.passwordBox);
 
         submitCreate = findViewById(R.id.submitButton);
-        dbc = new DBConnection();
+        dbc = DBConnection.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         submitCreate.setOnClickListener(new View.OnClickListener() {

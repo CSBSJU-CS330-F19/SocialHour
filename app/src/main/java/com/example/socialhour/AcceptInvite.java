@@ -38,7 +38,7 @@ public class AcceptInvite extends AppCompatActivity {
 
         accept = findViewById(R.id.button);
         refuse = findViewById(R.id.button2);
-        dbc = LogOn.dbc;
+        dbc = DBConnection.getInstance();
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
