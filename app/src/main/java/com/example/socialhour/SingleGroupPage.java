@@ -29,7 +29,7 @@ public class SingleGroupPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_group_page);
         LinearLayout groupMembers = findViewById(R.id.groupMembers);
-        dbc = LogOn.dbc;
+        dbc = DBConnection.getInstance();
 
         addMember = findViewById(R.id.pendingGroups);
         usernameInput = findViewById(R.id.editText2);

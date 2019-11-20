@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbc = LogOn.dbc;
+        dbc = DBConnection.getInstance();
         mAuth = FirebaseAuth.getInstance();
         //User newUser = dbc.getUser(LogOn.username);
         String welcome = User.getUserKey(LogOn.username);

@@ -26,7 +26,7 @@ public class CreateGroup extends AppCompatActivity {
 
         makeGroup = findViewById(R.id.createGroup);
         groupName = findViewById(R.id.editText);
-        dbConnection = LogOn.dbc;
+        dbConnection = DBConnection.getInstance();
 
 
 
