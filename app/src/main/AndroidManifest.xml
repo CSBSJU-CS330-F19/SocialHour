@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SingleGroupPage"></activity>
+        <activity android:name=".CreateEvent"></activity>
+        <activity android:name=".EventsPage" />
+        <activity android:name=".SingleGroupPage" />
         <activity android:name=".AcceptInvite" />
         <activity android:name=".PendingGroups" />
         <activity android:name=".CreateAccount" />
