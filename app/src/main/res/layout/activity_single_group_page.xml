@@ -7,6 +7,7 @@
     android:background="@drawable/coolcolors"
     tools:context=".SingleGroupPage">
 
+
     <Button
         android:id="@+id/pendingGroups"
         android:layout_width="121dp"
@@ -14,22 +15,22 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="156dp"
-        android:layout_marginEnd="261dp"
-        android:layout_marginRight="261dp"
+        android:layout_marginTop="221dp"
+        android:layout_marginEnd="247dp"
+        android:layout_marginRight="247dp"
         android:background="@drawable/button_background"
         android:text="Add New Member to Group" />
 
     <Button
         android:id="@+id/manageEvents"
-        android:layout_width="125dp"
-        android:layout_height="55dp"
+        android:layout_width="159dp"
+        android:layout_height="86dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="259dp"
-        android:layout_marginRight="259dp"
+        android:layout_marginTop="115dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:background="@drawable/button_background"
         android:text="Manage Events" />
 
@@ -40,120 +41,42 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="-49dp"
-        android:layout_marginRight="-49dp"
+        android:layout_marginTop="305dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="Members"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <ScrollView
-        android:layout_width="204dp"
-        android:layout_height="206dp"
+        android:layout_width="369dp"
+        android:layout_height="277dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="67dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp">
+        android:layout_marginTop="413dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginRight="23dp">
 
         <LinearLayout
             android:id="@+id/groupMembers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
     </ScrollView>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="422dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="361dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="3dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/01/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/02/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/03/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/04/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/05/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/06/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-        </LinearLayout>
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="383dp"
-        android:layout_height="68dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="281dp"
-        android:text="Events"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="138dp"
-        android:layout_height="55dp"
+        android:layout_width="167dp"
+        android:layout_height="113dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="18dp"
-        android:text="Enter a member to send a request to add to the group" />
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="69dp"
+        android:text="Enter a member to send a request to add to the group"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
         android:id="@+id/editText2"
@@ -162,11 +85,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="99dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="150dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="Name"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

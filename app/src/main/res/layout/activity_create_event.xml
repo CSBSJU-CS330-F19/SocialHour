@@ -9,16 +9,16 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="282dp"
-        android:layout_height="241dp"
+        android:layout_width="321dp"
+        android:layout_height="243dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="56dp"
-        android:layout_marginLeft="56dp"
-        android:layout_marginTop="10dp"
-        android:text="Enter the Event's Name:"
+        android:layout_marginStart="37dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="26dp"
+        android:text="Enter the Event's Information:"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
 
     <EditText
@@ -28,12 +28,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginLeft="63dp"
-        android:layout_marginBottom="323dp"
+        android:layout_marginStart="58dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginBottom="404dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Event Name" />
+        android:hint="Event Name"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/createEvent"
@@ -42,9 +42,52 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="136dp"
-        android:layout_marginLeft="136dp"
-        android:layout_marginBottom="260dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginLeft="119dp"
+        android:layout_marginBottom="114dp"
         android:background="@drawable/button_background"
         android:text="Submit" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="61dp"
+        android:layout_marginLeft="61dp"
+        android:layout_marginBottom="343dp"
+        android:ems="10"
+        android:hint="Date MM/DD/YYYY"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="58dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginBottom="275dp"
+        android:ems="10"
+        android:hint="Start Time HH:MM"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginLeft="59dp"
+        android:layout_marginBottom="212dp"
+        android:ems="10"
+        android:hint="End Time HH:MM"
+        android:inputType="time" />
+
 </RelativeLayout>
