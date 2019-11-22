@@ -2,6 +2,7 @@ package com.example.socialhour;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class SingleGroupPage extends AppCompatActivity {
 
-    Button addMember;
+    Button addMember, events;
     Group selectedGroup;
     DBConnection dbc;
     private EditText usernameInput;
@@ -31,6 +32,7 @@ public class SingleGroupPage extends AppCompatActivity {
         LinearLayout groupMembers = findViewById(R.id.groupMembers);
         dbc = DBConnection.getInstance();
 
+        events = findViewById(R.id.manageEvents);
         addMember = findViewById(R.id.pendingGroups);
         usernameInput = findViewById(R.id.editText2);
 
@@ -89,6 +91,12 @@ public class SingleGroupPage extends AppCompatActivity {
                 //System.out.println("entered a bad username");
 
 
+            }
+        });
+        events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), EventsPage.class));
             }
         });
     }
