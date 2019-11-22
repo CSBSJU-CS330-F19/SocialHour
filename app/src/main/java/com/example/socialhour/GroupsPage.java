@@ -28,10 +28,12 @@ public class GroupsPage extends AppCompatActivity {
         DBConnection dbc = DBConnection.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups_page);
+        User currentUser = dbc.getCurrentUser();
 
         createGroup = (Button) findViewById(R.id.createGroup);
         viewPending = (Button) findViewById(R.id.pendingGroups);
 
+        dbc.getEventTimes(User.getUserKey(currentUser.getEmail()));
 
         groupsSnap = dbc.getGroupsSnapshot();
 
@@ -55,7 +57,6 @@ public class GroupsPage extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        User currentUser = dbc.getCurrentUser();
         final ArrayList<String> groups = currentUser.getGroups();
 
 

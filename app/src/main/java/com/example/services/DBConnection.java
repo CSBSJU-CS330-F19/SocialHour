@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.DataTypes.Group;
 import com.example.DataTypes.User;
 import com.example.socialhour.MainActivity;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -134,6 +135,17 @@ public class DBConnection {
             }
         };
         dbConnection.db.addValueEventListener(readDB);
+    }
+
+    public void getEventTimes(String userID){
+        DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("events");
+        System.out.println("HELLLOOOOOOOOOOOO");
+        for(DataSnapshot d : allEvents.getChildren()){
+            EventDateTime startTime = d.child("start").child("dateTime").getValue(EventDateTime.class);
+            EventDateTime endTime = d.child("end").child("dateTime").getValue(EventDateTime.class);
+            System.out.println("Start Time: " + startTime);
+            System.out.println("End Time: " + endTime);
+        }
     }
 
     public void setCurrentUser (User u){
