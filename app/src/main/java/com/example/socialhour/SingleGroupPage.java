@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class SingleGroupPage extends AppCompatActivity {
 
     Button addMember, events;
-    Group selectedGroup;
+    static Group selectedGroup;
     DBConnection dbc;
     private EditText usernameInput;
     String username;
