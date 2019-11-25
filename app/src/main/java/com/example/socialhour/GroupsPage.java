@@ -10,10 +10,25 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.services.DBConnection;
+import com.example.services.WriteEventToGoogleCalendar;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.google.firebase.database.DataSnapshot;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.TimeZone;
 
 import com.example.DataTypes.*;
 
@@ -77,6 +92,46 @@ public class GroupsPage extends AppCompatActivity {
 
             linearLayout.addView(button);
 
+        }
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null)
+        {
+            GoogleAccountCredential credential =
+                    GoogleAccountCredential.usingOAuth2(
+                            this,
+                            Collections.singleton(CalendarScopes.CALENDAR));
+            credential.setSelectedAccount(account.getAccount());
+            Event event = new Event();
+            event.setDescription("Test Event");
+            event.setSummary("test event");
+
+            Calendar cal = Calendar.getInstance();
+            TimeZone timezone = TimeZone.getDefault();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+            cal.set(2019,10,25,12,00);
+            Date startTime = cal.getTime();
+
+            cal.set(2019,10,25,12,30);
+            Date endTime = cal.getTime();
+
+
+            String startDateISO = df.format(startTime);
+            String endDateISO = df.format(endTime);
+            DateTime startDateTime = new DateTime(startDateISO);
+            DateTime endDateTime = new DateTime(endDateISO);
+
+            event.setStart(new EventDateTime()
+                    .setDate(startDateTime));
+            event.setEnd(new EventDateTime()
+                    .setDate(endDateTime));
+
+//            event.setStart(new EventDateTime()
+//                    .setDate(new DateTime(true, startTime.getTime(), timezone.getRawOffset())));
+//            event.setEnd(new EventDateTime()
+//                    .setDate(new DateTime(true, endTime.getTime(), timezone.getRawOffset())));
+            GoogleEventContainer container = new GoogleEventContainer(credential, event);
+            new WriteEventToGoogleCalendar().execute(container);
         }
     }
 
