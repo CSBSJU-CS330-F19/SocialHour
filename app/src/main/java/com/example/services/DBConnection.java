@@ -137,7 +137,7 @@ public class DBConnection {
         dbConnection.db.addValueEventListener(readDB);
     }
 
-    public void getEventTimes(String userID){
+    /*public void getEventTimes(String userID){
         DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("events");
         //System.out.println("HELLLOOOOOOOOOOOO");
         for(DataSnapshot d : allEvents.getChildren()){
@@ -146,7 +146,7 @@ public class DBConnection {
             System.out.println("Start Time: " + startTime);
             System.out.println("End Time: " + endTime);
         }
-    }
+    }*/
 
     /*add a new event entry into the database*/
     public void addEventToDB(SocialHourEvent newSocialHourEvent){

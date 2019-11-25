@@ -33,7 +33,7 @@ public class GroupsPage extends AppCompatActivity {
         createGroup = (Button) findViewById(R.id.createGroup);
         viewPending = (Button) findViewById(R.id.pendingGroups);
 
-        dbc.getEventTimes(User.getUserKey(currentUser.getEmail()));
+        //dbc.getEventTimes(User.getUserKey(currentUser.getEmail()));
 
         groupsSnap = dbc.getGroupsSnapshot();
 

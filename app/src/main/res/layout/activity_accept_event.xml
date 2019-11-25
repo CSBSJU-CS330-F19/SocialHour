@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/coolcolors"
-    tools:context=".AcceptInvite">
+    tools:context=".AcceptEvent">
 
     <TextView
-        android:id="@+id/InviteName"
+        android:id="@+id/EventName"
         android:layout_width="298dp"
         android:layout_height="200dp"
         android:layout_marginStart="55dp"
@@ -22,26 +22,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/Accept"
         android:layout_width="127dp"
         android:layout_height="103dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="143dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="240dp"
         android:background="@drawable/button_background"
         android:text="Accept"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InviteName" />
+        app:layout_constraintTop_toBottomOf="@+id/EventName" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/Decline"
         android:layout_width="130dp"
         android:layout_height="98dp"
-        android:layout_marginTop="143dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginRight="55dp"
+        android:layout_marginTop="240dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:background="@drawable/button_background"
         android:text="Decline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InviteName" />
+        app:layout_constraintTop_toBottomOf="@+id/EventName" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="336dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Date: MM/DD/YYYY"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="244dp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="335dp"
+        android:layout_height="53dp"
+        android:text="Time: HH:MM"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="317dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SingleEventPage"></activity>
+        <activity android:name=".AcceptEvent"></activity>
+        <activity android:name=".SingleEventPage" />
         <activity android:name=".CreateEvent" />
         <activity android:name=".EventsPage" />
         <activity android:name=".SingleGroupPage" />

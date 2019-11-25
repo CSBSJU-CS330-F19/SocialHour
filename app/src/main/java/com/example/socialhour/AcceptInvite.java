@@ -7,15 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.services.DBConnection;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -33,7 +27,7 @@ public class AcceptInvite extends AppCompatActivity {
         String id =  PendingGroups.selectedGroup;
         String displayName = groupsSnap.child(id).child("name").getValue(String.class);
 
-        TextView name = findViewById(R.id.textView10);
+        TextView name = findViewById(R.id.InviteName);
         name.setText(displayName);
 
         accept = findViewById(R.id.button);
