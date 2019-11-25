@@ -38,6 +38,7 @@ public class ImportCalendar extends AsyncTask<GoogleAccountCredential, Void, Voi
 
             List<Event> items = events.getItems();
 
+
             String username = credential.getSelectedAccountName()
                     .substring(0, credential.getSelectedAccountName().indexOf("@"));
             DatabaseReference userEventsRef = FirebaseDatabase.getInstance().getReference()
