@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.example.services.DBConnection;
 import com.google.firebase.database.DataSnapshot;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -32,8 +33,6 @@ public class GroupsPage extends AppCompatActivity {
 
         createGroup = (Button) findViewById(R.id.createGroup);
         viewPending = (Button) findViewById(R.id.pendingGroups);
-
-        //dbc.getEventTimes(User.getUserKey(currentUser.getEmail()));
 
         groupsSnap = dbc.getGroupsSnapshot();
 
