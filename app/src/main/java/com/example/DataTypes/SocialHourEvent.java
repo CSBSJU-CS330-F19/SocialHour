@@ -58,7 +58,7 @@ public class SocialHourEvent {
     }
 
     public DateTime getEndTime() {
-        return startTime;
+        return endTime;
     }
 
     public void setEndTime(DateTime dateTime) {
