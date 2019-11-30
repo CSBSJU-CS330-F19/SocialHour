@@ -12,10 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.services.DBConnection;
+import com.example.services.GenerateMeetingTimes;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 public class LogOn extends AppCompatActivity {
