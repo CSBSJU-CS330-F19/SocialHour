@@ -38,6 +38,7 @@ public class ImportCalendar extends AsyncTask<GoogleAccountCredential, Void, Voi
 
             List<Event> items = events.getItems();
 
+
             String username = credential.getSelectedAccountName()
                     .substring(0, credential.getSelectedAccountName().indexOf("@"));
             DatabaseReference userEventsRef = FirebaseDatabase.getInstance().getReference()
@@ -46,6 +47,19 @@ public class ImportCalendar extends AsyncTask<GoogleAccountCredential, Void, Voi
                     .child("Events");
 
             userEventsRef.setValue(items);
+
+            int num = 0;
+            for (Event i : items){
+                userEventsRef.child(String.valueOf(num))
+                        .child("StringTimes")
+                        .child("start")
+                        .setValue(i.getStart().getDateTime().toString());
+                userEventsRef.child(String.valueOf(num))
+                        .child("StringTimes")
+                        .child("end")
+                        .setValue(i.getEnd().getDateTime().toString());
+                num++;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

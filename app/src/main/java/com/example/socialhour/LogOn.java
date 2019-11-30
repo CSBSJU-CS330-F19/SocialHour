@@ -58,8 +58,6 @@ public class LogOn extends AppCompatActivity {
         logOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> times = GenerateMeetingTimes.generateMeetingTime("",12,12,2019, 600, 2330);
-                System.out.println(times);
                 username = usernameInput.getText().toString().trim();
                 password = passwordInput.getText().toString().trim();
 
