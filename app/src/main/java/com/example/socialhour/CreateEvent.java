@@ -27,7 +27,7 @@ public class CreateEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
-        createButton = findViewById(R.id.createEvent);
+        createButton = findViewById(R.id.genMeetingTimes);
         eventName = findViewById(R.id.editText);
         dbConnection = DBConnection.getInstance();
 
