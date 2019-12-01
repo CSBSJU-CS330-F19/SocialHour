@@ -22,6 +22,8 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,24 +110,33 @@ public class GroupsPage extends AppCompatActivity {
 
             Calendar cal = Calendar.getInstance();
             TimeZone timezone = TimeZone.getDefault();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+            df.setTimeZone(timezone);
 
-            cal.set(2019,10,25,12,00);
-            Date startTime = cal.getTime();
+            cal.set(2019,10,25,23,00, 00);
+            Instant startInstant = Instant.parse(df.format(cal.getTime()));
+//            startInstant.atOffset(ZoneOffset.ofHours(6));
 
-            cal.set(2019,10,25,12,30);
-            Date endTime = cal.getTime();
+            Date startTime = Date.from(startInstant);
+
+            cal.set(2019,10,25,23,30, 00);
+            Instant endInstant = Instant.parse(df.format(cal.getTime()));
+//            startInstant.atOffset(ZoneOffset.ofHours(6));
+            Date endTime = Date.from(endInstant);
 
 
             String startDateISO = df.format(startTime);
             String endDateISO = df.format(endTime);
+
             DateTime startDateTime = new DateTime(startDateISO);
             DateTime endDateTime = new DateTime(endDateISO);
 
+//            System.out.println(startDateISO);
+            System.out.println(startTime);
             event.setStart(new EventDateTime()
-                    .setDate(startDateTime));
+                    .setDateTime(startDateTime));
             event.setEnd(new EventDateTime()
-                    .setDate(endDateTime));
+                    .setDateTime(endDateTime));
 
 //            event.setStart(new EventDateTime()
 //                    .setDate(new DateTime(true, startTime.getTime(), timezone.getRawOffset())));
