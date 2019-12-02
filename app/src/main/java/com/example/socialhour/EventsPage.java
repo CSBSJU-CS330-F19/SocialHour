@@ -18,7 +18,7 @@ public class EventsPage extends AppCompatActivity {
         createEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), CreateEvent.class));
+                startActivity(new Intent(getApplicationContext(), InputGenerateMeetingTimes.class));
 
             }
         });

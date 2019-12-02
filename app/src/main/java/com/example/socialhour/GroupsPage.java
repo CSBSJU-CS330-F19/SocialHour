@@ -48,8 +48,8 @@ public class GroupsPage extends AppCompatActivity {
         viewPending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<LocalDateTime> times = GenerateMeetingTimes.generateMeetingTime("d4bb10af-9ed3-4426-b3af-bdd019e565a9",12,6,2019, 600, 2330);
-                System.out.println(times);
+                /*ArrayList<LocalDateTime> times = GenerateMeetingTimes.generateMeetingTime("ece75b59-8e5e-49a7-8463-b2cce79e512c",12,06,2019, 600, 2330);
+                System.out.println(times);*/
                 startActivity(new Intent(getApplicationContext(), PendingGroups.class));
             }
         });
