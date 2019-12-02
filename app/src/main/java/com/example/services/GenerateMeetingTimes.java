@@ -62,6 +62,7 @@ public class GenerateMeetingTimes {
             int endTime = (endTimes.get(i).getHour() * 100) + endTimes.get(i).getMinute();
             for(int t = 0; t < times.size(); t++){
                 if(startTime <= times.get(t) && times.get(t) < endTime){
+                    System.out.println("Removing :" + t);
                     times.remove(t);
                     t--;
                 }
@@ -71,7 +72,7 @@ public class GenerateMeetingTimes {
         ArrayList<LocalDateTime> ret = new ArrayList<>();
 
         for(int i: times){
-            LocalDateTime meetingTime = LocalDateTime.of(year, day, month, i/100, i%100,00);
+            LocalDateTime meetingTime = LocalDateTime.of(year, month, day, i/100, i%100,00);
             ret.add(meetingTime);
         }
 
