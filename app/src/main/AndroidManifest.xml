@@ -13,7 +13,7 @@
         <activity android:name=".ViewGenMeetingTimes" />
         <activity android:name=".AcceptEvent" />
         <activity android:name=".SingleEventPage" />
-        <activity android:name=".CreateEvent" />
+        <activity android:name=".InputGenerateMeetingTimes" />
         <activity android:name=".EventsPage" />
         <activity android:name=".SingleGroupPage" />
         <activity android:name=".AcceptInvite" />

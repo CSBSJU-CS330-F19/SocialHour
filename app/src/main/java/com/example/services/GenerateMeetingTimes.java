@@ -10,7 +10,7 @@ import com.example.DataTypes.Group;
 public class GenerateMeetingTimes {
     private static DBConnection dbc;
 
-    public static ArrayList<LocalDateTime> generateMeetingTime(String groupId, int month, int day, int year, int sTime, int eTime){
+    public static ArrayList<LocalDateTime> generateMeetingTime(String groupId, int month, int day, int year, int sTime, int eTime, int length){
 
 
         //Generate array that holds the times that meetings can start at
@@ -63,6 +63,14 @@ public class GenerateMeetingTimes {
             for(int t = 0; t < times.size(); t++){
                 if(startTime <= times.get(t) && times.get(t) < endTime){
                     System.out.println("Removing :" + t);
+                    times.remove(t);
+                    t--;
+                }
+                if(startTime < times.get(t) + length && times.get(t) < endTime){
+                    times.remove(t);
+                    t--;
+                }
+                if(startTime >= times.get(t) && times.get(t) + length >= endTime){
                     times.remove(t);
                     t--;
                 }
