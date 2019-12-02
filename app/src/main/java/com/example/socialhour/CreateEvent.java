@@ -27,7 +27,7 @@ public class CreateEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
-        createButton = findViewById(R.id.createEvent);
+        createButton = findViewById(R.id.genMeetingTimes);
         eventName = findViewById(R.id.editText);
         dbConnection = DBConnection.getInstance();
 
@@ -46,8 +46,10 @@ public class CreateEvent extends AppCompatActivity {
                 String name = eventName.getText().toString();
 
                 //Hard coded for now
-                DateTime startTime = new DateTime("2019-12-22T13:14:00.000");
-                DateTime endTime = new DateTime("2019-12-22T14:15:00.000");
+                DateTime startTime = new DateTime("2019-12-22T13:30:00.000");
+                DateTime endTime = new DateTime("2019-12-22T14:30:00.000");
+                System.out.println(startTime.toString());
+                System.out.println(endTime.toString());
 
                 String groupID = currentGroup.getId();
 

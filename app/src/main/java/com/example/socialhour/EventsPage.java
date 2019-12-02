@@ -16,7 +16,7 @@ public class EventsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_page);
-        Button createEvent = findViewById(R.id.createEvent);
+        Button createEvent = findViewById(R.id.genMeetingTimes);
 
         createEvent.setOnClickListener(new View.OnClickListener() {
             @Override
