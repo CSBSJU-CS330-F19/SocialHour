@@ -145,11 +145,7 @@ public class DBConnection {
         dbConnection.db.addValueEventListener(readDB);
     }
 
-<<<<<<< HEAD
     public void acceptEventInvite(String eventID, ArrayList<String> pendingEvents){
-        //get UUID of events
-        //add it to current user
-
         dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
                 .child("pendingEvents").setValue(pendingEvents);
         ArrayList<String> events = dbConnection.currentUser.getEventsList();
@@ -162,39 +158,36 @@ public class DBConnection {
         dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
                 .child("Events").setValue(dbConnection.currentUser.getEventsList());
 
-        //SocialHourEvents newEvent = getEvent(eventID);
-        //newEvent.addUser(User.getUserKey(dbConnection.currentUser.getEmail()));
-        //addUserToEvent(newEvent);
+        SocialHourEvent newEvent = getEvent(eventID);
+        newEvent.addAttendee(User.getUserKey(dbConnection.currentUser.getEmail()));
+        addUserToEvent(newEvent);
     }
-
-    /*
-     * returns the requested group object from the db.
-
-    public SocialHourEvent getEvent (String eventID){
-        SocialHourEvent retEvent = new SocialHourEvent(dbConnection.groupsSnapshot.child(eventID)
-        .child("name").getValue().toString(),
-                dbConnection.groupsSnapshot.child(eventId).child("id").getValue().toString(),
-                (ArrayList<String>) dbConnection.groupsSnapshot.child(groupId).child("events").getValue(),
-                (ArrayList<String>) dbConnection.groupsSnapshot.child(groupId).child("members").getValue());
-        return retGroup;
-    }
-    */
-
-    /*adds a user key to a group object by taking a new group that includes the new member
-     * Stored at "Groups/uuid/members"
 
     public void addUserToEvent(SocialHourEvent event){
         dbConnection.db.child("Events").child(event.getEventID()).child("attendees").setValue(event.getAttendees());
     }
-    */
 
+    /*
+     * returns the requested group object from the db.
+     *
+     */
+
+    public SocialHourEvent getEvent (String eventID){
+        SocialHourEvent retEvent = new SocialHourEvent(dbConnection.eventDataSnapshot.child(eventID)
+        .child("eventName").getValue().toString(),
+                (DateTime) dbConnection.eventDataSnapshot.child(eventID).child("startTime").getValue(),
+                (DateTime) dbConnection.eventDataSnapshot.child(eventID).child("endTime").getValue(),
+                dbConnection.eventDataSnapshot.child(eventID).child("groupId").getValue().toString(),
+                dbConnection.eventDataSnapshot.child(eventID).child("eventID").getValue().toString(),
+                (ArrayList<String>) dbConnection.eventDataSnapshot.child(eventID).child("attendees").getValue());
+        return retEvent;
+    }
 
 
     public void declineEventInvite (ArrayList<String> pendingEvents){
         dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("pendingEvents").setValue(pendingEvents);
     }
 
-=======
     public ArrayList<LocalDateTime> getEventStartTimes(String userID){
         DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("Events");
         ArrayList<LocalDateTime> retList = new ArrayList<>();
@@ -281,7 +274,6 @@ public class DBConnection {
         else
             return new ArrayList<String>();
     }
->>>>>>> upstream/master
 
     public void setCurrentUser (User u){
         dbConnection.currentUser = u;

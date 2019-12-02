@@ -85,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), EventsPage.class));
+            }
+        });
 
         logOutButton = (Button) findViewById(R.id.logOutButton);
         logOutButton.setOnClickListener(new View.OnClickListener() {
