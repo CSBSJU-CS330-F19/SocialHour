@@ -2,9 +2,13 @@ package com.example.services;
 
 import android.util.Log;
 
+import com.example.DataTypes.SocialHourEvent;
 import com.example.DataTypes.Group;
 import com.example.DataTypes.User;
-import com.example.socialhour.MainActivity;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.google.api.services.calendar.model.Events;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,7 +16,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -23,6 +30,7 @@ public class DBConnection {
     private User currentUser;
     private DataSnapshot userDataSnapshot;
     private DataSnapshot groupsSnapshot;
+    private DataSnapshot eventDataSnapshot;
 
     public static DBConnection getInstance(){
         if(dbConnection == null){
@@ -119,6 +127,7 @@ public class DBConnection {
                 // Get Post object and use the values to update the UI
                 setGroupsSnapshot(dataSnapshot.child("Groups"));
                 setUserDataSnapshot(dataSnapshot.child("Users"));
+                setEventDataSnapshot(dataSnapshot.child("Events"));
                 DataSnapshot userSnap = dataSnapshot.child("Users").child(userKey);
                 dbConnection.currentUser = new User(userSnap.child("firstName").getValue().toString(), userSnap.child("email").getValue().toString(), userSnap.child("password").getValue().toString(),
                         (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("pendingGroups").getValue());
@@ -136,6 +145,7 @@ public class DBConnection {
         dbConnection.db.addValueEventListener(readDB);
     }
 
+<<<<<<< HEAD
     public void acceptEventInvite(String eventID, ArrayList<String> pendingEvents){
         //get UUID of events
         //add it to current user
@@ -184,6 +194,94 @@ public class DBConnection {
         dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("pendingEvents").setValue(pendingEvents);
     }
 
+=======
+    public ArrayList<LocalDateTime> getEventStartTimes(String userID){
+        DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("Events");
+        ArrayList<LocalDateTime> retList = new ArrayList<>();
+        for(DataSnapshot d : allEvents.getChildren()){
+            String startTime = d.child("StringTimes").child("start").getValue().toString();
+            int newHours = Integer.parseInt(startTime.substring(11, 13));
+            LocalDateTime t = LocalDateTime.of(Integer.parseInt(startTime.substring(0,4)),
+                                                Integer.parseInt(startTime.substring(5,7)),
+                                                Integer.parseInt(startTime.substring(8, 10)),
+                                                newHours,
+                                                Integer.parseInt(startTime.substring(14, 16)));
+            retList.add(t);
+        }
+        return retList;
+    }
+
+    public ArrayList<LocalDateTime> getEventEndTimes(String userID){
+        DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("Events");
+        ArrayList<LocalDateTime> retList = new ArrayList<>();
+        for(DataSnapshot d : allEvents.getChildren()){
+            String endTime = d.child("StringTimes").child("end").getValue().toString();
+            int newHours = Integer.parseInt(endTime.substring(11, 13));
+            LocalDateTime t = LocalDateTime.of(Integer.parseInt(endTime.substring(0,4)),
+                    Integer.parseInt(endTime.substring(5,7)),
+                    Integer.parseInt(endTime.substring(8, 10)),
+                    newHours,
+                    Integer.parseInt(endTime.substring(14, 16)));
+            retList.add(t);
+        }
+        return retList;
+    }
+
+    /*add a new event entry into the database*/
+    public void addEventToDB(SocialHourEvent newSocialHourEvent){
+        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).setValue(newSocialHourEvent);
+        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).child("StringTimes").child("start").setValue(newSocialHourEvent.getStartTime().toString());
+        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).child("StringTimes").child("end").setValue(newSocialHourEvent.getEndTime().toString());
+        ArrayList<String> userEvents = getUserSocialHourEvents(User.getUserKey(currentUser.getEmail()));
+        userEvents.add(newSocialHourEvent.getEventID());
+        dbConnection.db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("SocialHourEvents").setValue(userEvents);
+        ArrayList<String> groupEvents = getGroupSocialHourEvents(newSocialHourEvent.getGroupId());
+        groupEvents.add(newSocialHourEvent.getEventID());
+        dbConnection.db.child("Groups").child(newSocialHourEvent.getGroupId()).child("SocialHourEvents").setValue(groupEvents);
+        inviteAllMembersToEvent(newSocialHourEvent);
+    }
+
+    public void inviteAllMembersToEvent(SocialHourEvent newSocialHourEvent){
+        ArrayList<String> members = getAllMembersOfGroup(newSocialHourEvent.getGroupId());
+        String curID = User.getUserKey(currentUser.getEmail());
+        for(String m : members){
+            if(!m.equals(curID)){
+                ArrayList<String> mEvents = getPendingSocialHourEvents(m);
+                mEvents.add(newSocialHourEvent.getEventID());
+                dbConnection.db.child("Users").child(m).child("PendingSocialHourEvents").setValue(mEvents);
+            }
+        }
+    }
+
+    public ArrayList<String> getAllMembersOfGroup(String groupID){
+        ArrayList<String> allMembers = (ArrayList<String>) groupsSnapshot.child(groupID).child("members").getValue();
+        return allMembers;
+    }
+
+    public ArrayList<String> getUserSocialHourEvents(String userId){
+        ArrayList<String> events = (ArrayList<String>) userDataSnapshot.child(userId).child("SocialHourEvents").getValue();
+        if (events != null)
+            return events;
+        else
+            return new ArrayList<String>();
+    }
+
+    public ArrayList<String> getPendingSocialHourEvents(String userId){
+        ArrayList<String> events = (ArrayList<String>) userDataSnapshot.child(userId).child("PendingSocialHourEvents").getValue();
+        if (events != null)
+            return events;
+        else
+            return new ArrayList<String>();
+    }
+
+    public ArrayList<String> getGroupSocialHourEvents(String groupId){
+        ArrayList<String> events = (ArrayList<String>) groupsSnapshot.child(groupId).child("SocialHourEvents").getValue();
+        if (events != null)
+            return events;
+        else
+            return new ArrayList<String>();
+    }
+>>>>>>> upstream/master
 
     public void setCurrentUser (User u){
         dbConnection.currentUser = u;
@@ -207,5 +305,13 @@ public class DBConnection {
 
     public DataSnapshot getGroupsSnapshot(){
         return dbConnection.groupsSnapshot;
+    }
+
+    public void setEventDataSnapshot (DataSnapshot d){
+        dbConnection.eventDataSnapshot = d;
+    }
+
+    public DataSnapshot getEventDataSnapshot(){
+        return dbConnection.eventDataSnapshot;
     }
 }

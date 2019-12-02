@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.services.DBConnection;
+import com.example.services.GenerateMeetingTimes;
 import com.google.firebase.database.DataSnapshot;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,10 +30,10 @@ public class GroupsPage extends AppCompatActivity {
         DBConnection dbc = DBConnection.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups_page);
+        User currentUser = dbc.getCurrentUser();
 
         createGroup = (Button) findViewById(R.id.createGroup);
         viewPending = (Button) findViewById(R.id.pendingGroups);
-
 
         groupsSnap = dbc.getGroupsSnapshot();
 
@@ -46,6 +48,8 @@ public class GroupsPage extends AppCompatActivity {
         viewPending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<LocalDateTime> times = GenerateMeetingTimes.generateMeetingTime("d4bb10af-9ed3-4426-b3af-bdd019e565a9",12,6,2019, 600, 2330);
+                System.out.println(times);
                 startActivity(new Intent(getApplicationContext(), PendingGroups.class));
             }
         });
@@ -55,7 +59,6 @@ public class GroupsPage extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        User currentUser = dbc.getCurrentUser();
         final ArrayList<String> groups = currentUser.getGroups();
 
 

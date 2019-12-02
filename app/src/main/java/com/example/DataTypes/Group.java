@@ -7,7 +7,7 @@ public class Group {
 
     private String name;
     private String id;
-    private ArrayList<String> events = new ArrayList<>();
+    private ArrayList<String> socialHourEvents = new ArrayList<>();
     private ArrayList<String> members = new ArrayList<>();
 
     public Group(String name, String id) {
@@ -15,11 +15,11 @@ public class Group {
         this.id = id;
     }
 
-    public Group(String name, String id, ArrayList<String> events, ArrayList<String> members) {
+    public Group(String name, String id, ArrayList<String> socialHourEvents, ArrayList<String> members) {
         this.name = name;
         this.id = id;
-        if(events != null){
-            this.events = events;
+        if(socialHourEvents != null){
+            this.socialHourEvents = socialHourEvents;
         }
         if(members != null){
             this.members = members;
@@ -46,12 +46,12 @@ public class Group {
         this.id = id;
     }
 
-    public ArrayList<String> getEvents() {
-        return events;
+    public ArrayList<String> getSocialHourEvents() {
+        return socialHourEvents;
     }
 
-    public void setEvents(ArrayList<String> events) {
-        this.events = events;
+    public void setSocialHourEvents(ArrayList<String> socialHourEvents) {
+        this.socialHourEvents = socialHourEvents;
     }
 
     public ArrayList<String> getMembers() {
