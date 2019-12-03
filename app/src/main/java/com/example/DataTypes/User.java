@@ -11,14 +11,9 @@ public class User {
     private String firstName;
     private ArrayList<String> groups;
     private ArrayList<String> pendingGroups;
-<<<<<<< HEAD
-    private ArrayList<String> pendingEvents;
-    private ArrayList<String> eventsList;
-=======
     private ArrayList<String> eventsList;
     private ArrayList<String> pendingEvents;
     private ArrayList<Event> CalendarEvents;
->>>>>>> upstream/master
 
     public User(String firstName, String email, String password){
         this.setEmail(email);
@@ -119,15 +114,11 @@ public class User {
     }
 
     public void setEventsList(ArrayList<String> eventsList) { this.eventsList = eventsList; }
-<<<<<<< HEAD
 
-    public ArrayList<String> getEventsList() { return eventsList; }
-=======
 
     public ArrayList<String> getEventsList() { return eventsList; }
 
     public void setPendingEvents(ArrayList<String> eventsList) { this.eventsList = eventsList; }
 
     public ArrayList<String> getPendingEvents() { return eventsList; }
->>>>>>> upstream/master
 }
