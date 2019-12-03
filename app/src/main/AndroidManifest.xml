@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AcceptEvent"></activity>
+        <activity android:name=".ProposeMeeting"></activity>
+        <activity android:name=".PendingEvents" />
+        <activity android:name=".ViewGenMeetingTimes" />
+        <activity android:name=".AcceptEvent" />
         <activity android:name=".SingleEventPage" />
         <activity android:name=".CreateEvent" />
         <activity android:name=".EventsPage" />
