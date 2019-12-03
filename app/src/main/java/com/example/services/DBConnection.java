@@ -145,6 +145,33 @@ public class DBConnection {
         dbConnection.db.addValueEventListener(readDB);
     }
 
+    public void acceptEventInvite(String eventID, ArrayList<String> pendingEvents){
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
+                .child("PendingSocialHourEvents").setValue(pendingEvents);
+        ArrayList<String> events = dbConnection.currentUser.getEventsList();
+        if(events == null){
+            events = new ArrayList<>();
+        }
+
+        events.add(eventID);
+        dbConnection.currentUser.setEventsList(events);
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
+                .child("SocialHourEvents").setValue(dbConnection.currentUser.getEventsList());
+
+        ArrayList<String> attendees = (ArrayList<String>) eventDataSnapshot.child(eventID).child("attendees").getValue();
+        attendees.add(User.getUserKey(dbConnection.currentUser.getEmail()));
+        addUserToEvent(eventID, attendees);
+    }
+
+    public void addUserToEvent(String eventID, ArrayList attendees){
+        dbConnection.db.child("Events").child(eventID).child("attendees").setValue(attendees);
+    }
+
+
+    public void declineEventInvite (ArrayList<String> pendingEvents){
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("PendingSocialHourEvents").setValue(pendingEvents);
+    }
+
     public ArrayList<LocalDateTime> getEventStartTimes(String userID){
         DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("Events");
         ArrayList<LocalDateTime> retList = new ArrayList<>();
