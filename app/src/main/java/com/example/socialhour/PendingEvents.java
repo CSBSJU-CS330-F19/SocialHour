@@ -25,7 +25,7 @@ public class PendingEvents extends AppCompatActivity {
         setContentView(R.layout.activity_pending_events);
         DataSnapshot EventsSnap = dbc.getEventDataSnapshot();
 
-        LinearLayout linearLayout = findViewById(R.id.linear_layout);
+        LinearLayout linearLayout = findViewById(R.id.linear_lay);
 
         User currentUser = dbc.getCurrentUser();
         final ArrayList<String> pendingEvents = currentUser.getPendingEvents();
@@ -50,7 +50,6 @@ public class PendingEvents extends AppCompatActivity {
             });
 
             linearLayout.addView(button);
-
         }
     }
 

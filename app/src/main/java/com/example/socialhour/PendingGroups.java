@@ -3,7 +3,6 @@ package com.example.socialhour;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +11,6 @@ import java.util.*;
 import com.example.DataTypes.User;
 import com.example.services.DBConnection;
 import com.google.firebase.database.DataSnapshot;
-
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class PendingGroups extends AppCompatActivity {
 

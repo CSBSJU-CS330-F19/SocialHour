@@ -8,18 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.DataTypes.Group;
 import com.example.DataTypes.SocialHourEvent;
 import com.example.DataTypes.User;
 import com.example.services.DBConnection;
 import com.google.api.client.util.DateTime;
 import com.google.firebase.database.DataSnapshot;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class EventsPage extends AppCompatActivity {
-    Button viewPending;
+    Button viewPending, createEvent;
     static String selectedEvent;
     static DataSnapshot eventSnap;
 
@@ -31,6 +29,7 @@ public class EventsPage extends AppCompatActivity {
         User currentUser = dbc.getCurrentUser();
 
         viewPending = findViewById(R.id.pendingEvents);
+        createEvent = findViewById(R.id.createEvent);
 
         eventSnap = dbc.getEventDataSnapshot();
 
@@ -40,7 +39,13 @@ public class EventsPage extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), PendingEvents.class));
             }
         });
-        /*
+
+        createEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), CreateEvent.class));
+            }
+        });
 
         LinearLayout linearLayout = findViewById(R.id.linLayout);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -67,11 +72,7 @@ public class EventsPage extends AppCompatActivity {
 
             linearLayout.addView(button);
         }
-
-         */
     }
-
-    /*
 
     public void setSelectedEvent (String id){
         selectedEvent = id;
@@ -89,7 +90,7 @@ public class EventsPage extends AppCompatActivity {
         return returnEvent;
     }
 
-     */
+
 
 
 }

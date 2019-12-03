@@ -42,6 +42,8 @@ public class User {
         else {
             this.pendingGroups = new ArrayList<String>();
         }
+        this.eventsList = new ArrayList<String>();
+        this.pendingEvents = new ArrayList<String>();
     }
 
     public User(String firstName, String email, String password, ArrayList<String> groups,
@@ -85,7 +87,6 @@ public class User {
         int indexOfAt = email.indexOf("@");
         return email.substring(0, indexOfAt).replace('.', '-');
     }
-
 
     public String getEmail() {
         return email;
