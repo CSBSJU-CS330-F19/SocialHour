@@ -145,6 +145,49 @@ public class DBConnection {
         dbConnection.db.addValueEventListener(readDB);
     }
 
+    public void acceptEventInvite(String eventID, ArrayList<String> pendingEvents){
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
+                .child("pendingEvents").setValue(pendingEvents);
+        ArrayList<String> events = dbConnection.currentUser.getEventsList();
+        if(events == null){
+            events = new ArrayList<>();
+        }
+
+        events.add(eventID);
+        dbConnection.currentUser.setEventsList(events);
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
+                .child("Events").setValue(dbConnection.currentUser.getEventsList());
+
+        SocialHourEvent newEvent = getEvent(eventID);
+        newEvent.addAttendee(User.getUserKey(dbConnection.currentUser.getEmail()));
+        addUserToEvent(newEvent);
+    }
+
+    public void addUserToEvent(SocialHourEvent event){
+        dbConnection.db.child("Events").child(event.getEventID()).child("attendees").setValue(event.getAttendees());
+    }
+
+    /*
+     * returns the requested group object from the db.
+     *
+     */
+
+    public SocialHourEvent getEvent (String eventID){
+        SocialHourEvent retEvent = new SocialHourEvent(dbConnection.eventDataSnapshot.child(eventID)
+        .child("eventName").getValue().toString(),
+                (DateTime) dbConnection.eventDataSnapshot.child(eventID).child("startTime").getValue(),
+                (DateTime) dbConnection.eventDataSnapshot.child(eventID).child("endTime").getValue(),
+                dbConnection.eventDataSnapshot.child(eventID).child("groupId").getValue().toString(),
+                dbConnection.eventDataSnapshot.child(eventID).child("eventID").getValue().toString(),
+                (ArrayList<String>) dbConnection.eventDataSnapshot.child(eventID).child("attendees").getValue());
+        return retEvent;
+    }
+
+
+    public void declineEventInvite (ArrayList<String> pendingEvents){
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("pendingEvents").setValue(pendingEvents);
+    }
+
     public ArrayList<LocalDateTime> getEventStartTimes(String userID){
         DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("Events");
         ArrayList<LocalDateTime> retList = new ArrayList<>();

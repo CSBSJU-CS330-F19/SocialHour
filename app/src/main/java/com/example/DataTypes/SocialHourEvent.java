@@ -24,6 +24,10 @@ public class SocialHourEvent {
         }
     }
 
+    public void addAttendee(String userID){
+        attendees.add(userID);
+    }
+
     public String getEventName() {
         return eventName;
     }
