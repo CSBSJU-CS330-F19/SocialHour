@@ -26,9 +26,21 @@ public class AcceptEvent extends AppCompatActivity {
         DataSnapshot eventsSnap = LogOn.dbc.getEventDataSnapshot();
         String id =  PendingEvents.selectedEvent;
         String displayName = eventsSnap.child(id).child("eventName").getValue(String.class);
+        String startTime = eventsSnap.child(id).child("StringTimes").child("start").getValue(String.class);
+        String endTime = eventsSnap.child(id).child("StringTimes").child("end").getValue(String.class);
+        String start = startTime.substring(11,16);
+        String end = endTime.substring(11,16);
+        String day = startTime.substring(0, 10);
 
         TextView name = findViewById(R.id.EventName);
         name.setText(displayName);
+
+        TextView times = findViewById(R.id.textView13);
+        times.setText("Starts: " + start + "\n Ends: " + end);
+
+        TextView date = findViewById(R.id.textView10);
+        date.setText("Date: " + day);
+
 
         accept = findViewById(R.id.Accept);
         decline = findViewById(R.id.Decline);
