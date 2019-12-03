@@ -17,7 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import java.util.ArrayList;
 
 public class EventsPage extends AppCompatActivity {
-    Button viewPending, createEvent;
+    Button createEvent;
     static String selectedEvent;
     static DataSnapshot eventSnap;
 
@@ -28,17 +28,9 @@ public class EventsPage extends AppCompatActivity {
         setContentView(R.layout.activity_events_page);
         User currentUser = dbc.getCurrentUser();
 
-        viewPending = findViewById(R.id.pendingEvents);
         createEvent = findViewById(R.id.createEvent);
 
         eventSnap = dbc.getEventDataSnapshot();
-
-        viewPending.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), PendingEvents.class));
-            }
-        });
 
         createEvent.setOnClickListener(new View.OnClickListener() {
             @Override

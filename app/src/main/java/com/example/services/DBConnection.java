@@ -147,7 +147,7 @@ public class DBConnection {
 
     public void acceptEventInvite(String eventID, ArrayList<String> pendingEvents){
         dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
-                .child("pendingEvents").setValue(pendingEvents);
+                .child("PendingSocialHourEvents").setValue(pendingEvents);
         ArrayList<String> events = dbConnection.currentUser.getEventsList();
         if(events == null){
             events = new ArrayList<>();
@@ -156,36 +156,20 @@ public class DBConnection {
         events.add(eventID);
         dbConnection.currentUser.setEventsList(events);
         dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
-                .child("Events").setValue(dbConnection.currentUser.getEventsList());
+                .child("SocialHourEvents").setValue(dbConnection.currentUser.getEventsList());
 
-        SocialHourEvent newEvent = getEvent(eventID);
-        newEvent.addAttendee(User.getUserKey(dbConnection.currentUser.getEmail()));
-        addUserToEvent(newEvent);
+        ArrayList<String> attendees = (ArrayList<String>) eventDataSnapshot.child(eventID).child("attendees").getValue();
+        attendees.add(User.getUserKey(dbConnection.currentUser.getEmail()));
+        addUserToEvent(eventID, attendees);
     }
 
-    public void addUserToEvent(SocialHourEvent event){
-        dbConnection.db.child("Events").child(event.getEventID()).child("attendees").setValue(event.getAttendees());
-    }
-
-    /*
-     * returns the requested group object from the db.
-     *
-     */
-
-    public SocialHourEvent getEvent (String eventID){
-        SocialHourEvent retEvent = new SocialHourEvent(dbConnection.eventDataSnapshot.child(eventID)
-        .child("eventName").getValue().toString(),
-                (DateTime) dbConnection.eventDataSnapshot.child(eventID).child("startTime").getValue(),
-                (DateTime) dbConnection.eventDataSnapshot.child(eventID).child("endTime").getValue(),
-                dbConnection.eventDataSnapshot.child(eventID).child("groupId").getValue().toString(),
-                dbConnection.eventDataSnapshot.child(eventID).child("eventID").getValue().toString(),
-                (ArrayList<String>) dbConnection.eventDataSnapshot.child(eventID).child("attendees").getValue());
-        return retEvent;
+    public void addUserToEvent(String eventID, ArrayList attendees){
+        dbConnection.db.child("Events").child(eventID).child("attendees").setValue(attendees);
     }
 
 
     public void declineEventInvite (ArrayList<String> pendingEvents){
-        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("pendingEvents").setValue(pendingEvents);
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("PendingSocialHourEvents").setValue(pendingEvents);
     }
 
     public ArrayList<LocalDateTime> getEventStartTimes(String userID){

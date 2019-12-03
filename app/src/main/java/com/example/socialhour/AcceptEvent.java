@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.DataTypes.User;
 import com.example.services.DBConnection;
 import com.google.firebase.database.DataSnapshot;
 
@@ -36,10 +37,10 @@ public class AcceptEvent extends AppCompatActivity {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> pendingEvents = dbc.getCurrentUser().getPendingEvents();
+                ArrayList<String> pendingEvents = dbc.getPendingSocialHourEvents(User.getUserKey(dbc.getCurrentUser().getEmail()));
                 pendingEvents.remove(PendingEvents.selectedEvent);
-                dbc.acceptEventInvite(PendingGroups.selectedGroup, pendingEvents);
-                startActivity(new Intent(getApplicationContext(), EventsPage.class));
+                dbc.acceptEventInvite(PendingEvents.selectedEvent, pendingEvents);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
@@ -47,10 +48,10 @@ public class AcceptEvent extends AppCompatActivity {
             @Override
             public void onClick(View w) {
                 //removeFromPending(String.valueOf(R.id.textView10));
-                ArrayList<String> pendingEvents = dbc.getCurrentUser().getPendingGroups();
-                pendingEvents.remove(PendingGroups.selectedGroup);
+                ArrayList<String> pendingEvents = dbc.getPendingSocialHourEvents(User.getUserKey(dbc.getCurrentUser().getEmail()));
+                pendingEvents.remove(PendingEvents.selectedEvent);
                 dbc.declineEventInvite(pendingEvents);
-                startActivity(new Intent(getApplicationContext(), EventsPage.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
     }

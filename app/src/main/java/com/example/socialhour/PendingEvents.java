@@ -28,7 +28,7 @@ public class PendingEvents extends AppCompatActivity {
         LinearLayout linearLayout = findViewById(R.id.linear_lay);
 
         User currentUser = dbc.getCurrentUser();
-        final ArrayList<String> pendingEvents = currentUser.getPendingEvents();
+        final ArrayList<String> pendingEvents = dbc.getPendingSocialHourEvents(User.getUserKey(currentUser.getEmail()));
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
