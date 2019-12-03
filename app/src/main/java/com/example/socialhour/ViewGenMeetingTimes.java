@@ -48,10 +48,12 @@ public class ViewGenMeetingTimes extends AppCompatActivity {
                 public void onClick(View v) {
                     int x = button.getId();
                     LocalDateTime l = times.get(x);
-                    String dtString = l.toString();
-                    dtString = dtString.concat(":00.000");
+                    LocalDateTime end = l.plusHours(InputGenerateMeetingTimes.lenHour).plusMinutes(InputGenerateMeetingTimes.lenMin);
+                    String dtString = l.toString().concat(":00.000");
+                    String dtEndString = end.toString().concat(":00.000");
+
                     DateTime startTime = new DateTime(dtString);
-                    DateTime endTime = new DateTime("2019-12-22T14:30:00.000");
+                    DateTime endTime = new DateTime(dtEndString);
 
                     String name = InputGenerateMeetingTimes.eventNameText;
 

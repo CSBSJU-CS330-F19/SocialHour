@@ -50,15 +50,32 @@ public class ImportCalendar extends AsyncTask<GoogleAccountCredential, Void, Voi
 
             int num = 0;
             for (Event i : items){
-                userEventsRef.child(String.valueOf(num))
-                        .child("StringTimes")
-                        .child("start")
-                        .setValue(i.getStart().getDateTime().toString());
-                userEventsRef.child(String.valueOf(num))
-                        .child("StringTimes")
-                        .child("end")
-                        .setValue(i.getEnd().getDateTime().toString());
-                num++;
+                if(i.getStart().getDateTime() != null) {
+                    userEventsRef.child(String.valueOf(num))
+                            .child("StringTimes")
+                            .child("start")
+                            .setValue(i.getStart().getDateTime().toString());
+                    userEventsRef.child(String.valueOf(num))
+                            .child("StringTimes")
+                            .child("end")
+                            .setValue(i.getEnd().getDateTime().toString());
+                }
+                else{
+                    DateTime d = i.getStart().getDate();
+                    String start = d.toString().substring(0, 10);
+                    String end = d.toString().substring(0, 10);
+                    start = start.concat("T00:00:00.000");
+                    end = end.concat("T23:59:00.000");
+                    userEventsRef.child(String.valueOf(num))
+                            .child("StringTimes")
+                            .child("start")
+                            .setValue(start);
+                    userEventsRef.child(String.valueOf(num))
+                            .child("StringTimes")
+                            .child("end")
+                            .setValue(end);
+                }
+                num ++;
             }
         } catch (IOException e) {
             e.printStackTrace();

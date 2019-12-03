@@ -66,11 +66,11 @@ public class GenerateMeetingTimes {
                     times.remove(t);
                     t--;
                 }
-                if(startTime < times.get(t) + length && times.get(t) < endTime){
+                else if(startTime < times.get(t) + length && times.get(t) < endTime){
                     times.remove(t);
                     t--;
                 }
-                if(startTime >= times.get(t) && times.get(t) + length >= endTime){
+                else if(startTime >= times.get(t) && times.get(t) + length >= endTime){
                     times.remove(t);
                     t--;
                 }

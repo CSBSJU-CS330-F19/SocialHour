@@ -38,6 +38,7 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
     private static int upperHour, upperMinute;
     public static String eventNameText;
     public static ArrayList<LocalDateTime> times;
+    public static int lenHour, lenMin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +75,8 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
                 int intLowerTime = lowerHour * 100 + lowerMinute;
                 int intUpperTime = upperHour * 100 + upperMinute;
                 int eventLength = Integer.parseInt(length.getText().toString());
-                int lenHour = eventLength / 60;
-                int lenMin = eventLength % 60;
+                lenHour = eventLength / 60;
+                lenMin = eventLength % 60;
                 eventLength =  lenHour * 100 + lenMin;
                 System.out.println("EVENT LENGTH : " + eventLength);
                 times = GenerateMeetingTimes.generateMeetingTime(SingleGroupPage.selectedGroup.getId(),month,day,year, intLowerTime, intUpperTime, eventLength);
