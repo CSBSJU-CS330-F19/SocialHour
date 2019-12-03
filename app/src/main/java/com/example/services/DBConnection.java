@@ -130,9 +130,9 @@ public class DBConnection {
                 setEventDataSnapshot(dataSnapshot.child("Events"));
                 DataSnapshot userSnap = dataSnapshot.child("Users").child(userKey);
                 dbConnection.currentUser = new User(userSnap.child("firstName").getValue().toString(), userSnap.child("email").getValue().toString(), userSnap.child("password").getValue().toString(),
-                        (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("pendingGroups").getValue());
+                        (ArrayList<String>) userSnap.child("Groups").getValue(), (ArrayList<String>) userSnap.child("pendingGroups").getValue(),
+                        (ArrayList<String>) userSnap.child("SocialHourEvents").getValue(), (ArrayList<String>) userSnap.child("PendingSocialHourEvents").getValue());
                 setCurrentUser(dbConnection.currentUser);
-
             }
 
             @Override

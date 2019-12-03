@@ -13,6 +13,7 @@ import com.example.services.DBConnection;
 import com.example.services.GenerateMeetingTimes;
 import com.google.firebase.database.DataSnapshot;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +37,6 @@ public class GroupsPage extends AppCompatActivity {
         viewPending = (Button) findViewById(R.id.pendingGroups);
 
         groupsSnap = dbc.getGroupsSnapshot();
-
 
         createGroup.setOnClickListener(new View.OnClickListener() {
             @Override

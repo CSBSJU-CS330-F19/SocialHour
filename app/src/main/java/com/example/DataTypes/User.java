@@ -13,7 +13,6 @@ public class User {
     private ArrayList<String> pendingGroups;
     private ArrayList<String> eventsList;
     private ArrayList<String> pendingEvents;
-    private ArrayList<Event> CalendarEvents;
 
     public User(String firstName, String email, String password){
         this.setEmail(email);
@@ -21,6 +20,8 @@ public class User {
         this.setFirstName(firstName);
         this.groups = new ArrayList<String>();
         this.pendingGroups = new ArrayList<String>();
+        this.eventsList = new ArrayList<String>();
+        this.pendingEvents = new ArrayList<String>();
     }
 
     public User(String frstName, String email, String password, ArrayList<String> groups, ArrayList<String> pendingGroups){
@@ -39,6 +40,8 @@ public class User {
         else {
             this.pendingGroups = new ArrayList<String>();
         }
+        this.eventsList = new ArrayList<String>();
+        this.pendingEvents = new ArrayList<String>();
     }
 
     public User(String frstName, String email, String password, ArrayList<String> groups,
@@ -58,6 +61,18 @@ public class User {
         }
         else {
             this.pendingGroups = new ArrayList<String>();
+        }
+        if(socialHourEvents != null){
+            this.setEventsList(socialHourEvents);
+        }
+        else{
+            this.eventsList = new ArrayList<String>();
+        }
+        if(pendingEvents != null){
+            this.setPendingEvents(pendingEvents);
+        }
+        else{
+            this.pendingEvents = new ArrayList<String>();
         }
     }
 
