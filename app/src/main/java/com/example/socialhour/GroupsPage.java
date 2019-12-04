@@ -3,20 +3,26 @@ package com.example.socialhour;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.services.DBConnection;
-import com.example.services.GenerateMeetingTimes;
+import com.example.services.WriteEventToGoogleCalendar;
+import com.example.services.TimeConverter;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.database.DataSnapshot;
 
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.UUID;
 
 import com.example.DataTypes.*;
 
@@ -62,7 +68,7 @@ public class GroupsPage extends AppCompatActivity {
         final ArrayList<String> groups = currentUser.getGroups();
 
 
-        for (int i = 0; i < groups.size(); i++){
+        for (int i = 0; i < groups.size(); i++) {
             final Button button = new Button(this);
             button.setText(groupsSnap.child(groups.get(i)).child("name").getValue(String.class));
             button.setLayoutParams(params);
@@ -74,12 +80,11 @@ public class GroupsPage extends AppCompatActivity {
                 public void onClick(View v) {
                     int x = button.getId();
                     setSelectedGroup(groups.get(x));
-                    startActivity(new Intent(getApplicationContext(),SingleGroupPage.class));
+                    startActivity(new Intent(getApplicationContext(), SingleGroupPage.class));
                 }
             });
 
             linearLayout.addView(button);
-
         }
     }
 

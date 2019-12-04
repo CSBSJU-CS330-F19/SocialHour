@@ -2,9 +2,10 @@ package com.example.DataTypes;
 
 import com.google.api.client.util.DateTime;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SocialHourEvent {
+public class SocialHourEvent implements Serializable {
 
     private String eventName;
     private DateTime startTime;

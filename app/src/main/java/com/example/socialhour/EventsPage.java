@@ -16,6 +16,9 @@ import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 public class EventsPage extends AppCompatActivity {
     Button createEvent;
     static String selectedEvent;
