@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.services.DBConnection;
-import com.example.services.TestClass;
+import com.example.services.WriteEventToGoogleCalendar;
 import com.example.services.TimeConverter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -18,9 +18,6 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.database.DataSnapshot;
 
-import com.example.services.GenerateMeetingTimes;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
@@ -106,7 +103,7 @@ public class GroupsPage extends AppCompatActivity {
                             Collections.singleton(CalendarScopes.CALENDAR));
             credential.setSelectedAccount(account.getAccount());
 
-            new TestClass(credential, event).execute();
+            new WriteEventToGoogleCalendar(credential, event).execute();
         }
     }
 

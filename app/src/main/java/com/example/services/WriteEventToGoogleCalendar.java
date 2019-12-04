@@ -13,7 +13,7 @@ import com.google.api.services.calendar.model.EventDateTime;
 
 import java.io.IOException;
 
-public class TestClass extends AsyncTask<Void, Void, Void> {
+public class WriteEventToGoogleCalendar extends AsyncTask<Void, Void, Void> {
     private GoogleAccountCredential accountCredential;
     private SocialHourEvent socialHourEvent;
 
@@ -21,7 +21,7 @@ public class TestClass extends AsyncTask<Void, Void, Void> {
     private static final String APPLICATION_NAME = "Social Hour";
     private final NetHttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
-    public TestClass(GoogleAccountCredential credential, SocialHourEvent event)
+    public WriteEventToGoogleCalendar(GoogleAccountCredential credential, SocialHourEvent event)
     {
         this.accountCredential = credential;
         this.socialHourEvent = event;
