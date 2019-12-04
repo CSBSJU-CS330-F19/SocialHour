@@ -85,26 +85,6 @@ public class GroupsPage extends AppCompatActivity {
 
             linearLayout.addView(button);
         }
-
-        DateTime startTime = new DateTime(TimeConverter.Convert(
-                "12","5","2019","12","00"
-        ));
-        DateTime endTime = new DateTime(TimeConverter.Convert(
-                "12","5","2019","12","30"
-        ));
-        SocialHourEvent event = new SocialHourEvent("testEvent",startTime,endTime,
-                "5", UUID.randomUUID().toString(),new ArrayList<String>());
-
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
-            GoogleAccountCredential credential =
-                    GoogleAccountCredential.usingOAuth2(
-                            this,
-                            Collections.singleton(CalendarScopes.CALENDAR));
-            credential.setSelectedAccount(account.getAccount());
-
-            new WriteEventToGoogleCalendar(credential, event).execute();
-        }
     }
 
     public void setSelectedGroup(String id){
