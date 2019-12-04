@@ -227,6 +227,9 @@ public class DBConnection {
             int eNewHours = eOldHours + 6;
             String eOldHourString = Integer.toString(eOldHours);
             String eNewHourString = Integer.toString(eNewHours);
+            if(eNewHours >= 24){
+                eNewHourString = "23";
+            }
             if (eOldHours < 10) {
                 eOldHourString = "0" + eOldHourString;
             }
