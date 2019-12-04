@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.DataTypes.SocialHourEvent;
 import com.example.DataTypes.Group;
@@ -23,6 +24,7 @@ import com.example.services.DBConnection;
 import com.example.services.GenerateMeetingTimes;
 import com.google.api.client.util.DateTime;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +35,8 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
     private Button createButton, early, late;
     private EditText eventName, length;
     private static TextView currentDate;
+    private static TextView earlyTime;
+    private static TextView lateTime;
     private static int year, month, day;
     private static int lowerHour, lowerMinute;
     private static int upperHour, upperMinute;
@@ -49,10 +53,9 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
         eventName = findViewById(R.id.editText);
         currentDate =findViewById(R.id.chosenDate);
         length = findViewById(R.id.length);
+        earlyTime = findViewById(R.id.earlyTime);
+        lateTime = findViewById(R.id.lateTime);
 
-        //date = findViewById(R.id.DateInput);
-        /*early = findViewById(R.id.StartTime);
-        late = findViewById(R.id.EndTime);*/
         dbConnection = DBConnection.getInstance();
 
 
@@ -74,41 +77,22 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
                 }
                 int intLowerTime = lowerHour * 100 + lowerMinute;
                 int intUpperTime = upperHour * 100 + upperMinute;
-                int eventLength = Integer.parseInt(length.getText().toString());
+                int eventLength = 30;
+                if (!length.getText().toString().equals("")) {
+                    eventLength = Integer.parseInt(length.getText().toString());
+                }
                 lenHour = eventLength / 60;
                 lenMin = eventLength % 60;
                 eventLength =  lenHour * 100 + lenMin;
-                System.out.println("EVENT LENGTH : " + eventLength);
-                times = GenerateMeetingTimes.generateMeetingTime(SingleGroupPage.selectedGroup.getId(),month,day,year, intLowerTime, intUpperTime, eventLength);
-                System.out.println(times);
-                eventNameText = eventName.getText().toString();
-                /*User currentUser = dbConnection.getCurrentUser();
+                try {
+                    times = GenerateMeetingTimes.generateMeetingTime(SingleGroupPage.selectedGroup.getId(), month, day, year, intLowerTime, intUpperTime, eventLength);
+                    eventNameText = eventName.getText().toString();
+                    startActivity(new Intent(getApplicationContext(), ViewGenMeetingTimes.class));
+                }
+                catch(DateTimeException | NullPointerException e){
+                    Toast.makeText(getApplicationContext(), "Please enter all fields", Toast.LENGTH_SHORT).show();
+                }
 
-                String uniqueID = User.getUserKey(currentUser.getEmail());
-
-                Group currentGroup = SingleGroupPage.selectedGroup;
-
-                String name = eventName.getText().toString();
-
-                //Hard coded for now
-                DateTime startTime = new DateTime("2019-12-22T13:30:00.000");
-                DateTime endTime = new DateTime("2019-12-22T14:30:00.000");
-                System.out.println(startTime.toString());
-                System.out.println(endTime.toString());
-
-                String groupID = currentGroup.getId();
-
-                String eventID = UUID.randomUUID().toString();
-
-                ArrayList<String> attendees = new ArrayList<>();
-
-                attendees.add(uniqueID);
-
-                SocialHourEvent newSocialHourEvent = new SocialHourEvent(name, startTime, endTime, groupID, eventID, attendees);
-
-                dbConnection.addEventToDB(newSocialHourEvent);*/
-
-                startActivity(new Intent(getApplicationContext(), ViewGenMeetingTimes.class));
 
             }
         });
@@ -138,6 +122,8 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             InputGenerateMeetingTimes.lowerHour = hourOfDay;
             InputGenerateMeetingTimes.lowerMinute = minute;
+            String earlyTimeText = hourOfDay + ":" + minute;
+            InputGenerateMeetingTimes.earlyTime.setText(earlyTimeText);
         }
     }
 
@@ -164,6 +150,8 @@ public class InputGenerateMeetingTimes extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             InputGenerateMeetingTimes.upperHour = hourOfDay;
             InputGenerateMeetingTimes.upperMinute = minute;
+            String lateTimeText = hourOfDay + ":" + minute;
+            InputGenerateMeetingTimes.lateTime.setText(lateTimeText);
         }
     }
 
