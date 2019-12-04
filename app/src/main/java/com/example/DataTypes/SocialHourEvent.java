@@ -25,6 +25,10 @@ public class SocialHourEvent implements Serializable {
         }
     }
 
+    public void addAttendee(String userID){
+        attendees.add(userID);
+    }
+
     public String getEventName() {
         return eventName;
     }

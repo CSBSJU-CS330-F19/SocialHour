@@ -7,10 +7,28 @@
     android:background="@drawable/coolcolors"
     tools:context=".ViewGenMeetingTimes">
 
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="365dp"
+        android:layout_height="89dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:text="default"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="135dp">
 
         <LinearLayout
             android:id="@+id/generatedTimes"

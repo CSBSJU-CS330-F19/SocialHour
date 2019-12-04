@@ -21,9 +21,11 @@ public class User {
         this.setFirstName(firstName);
         this.groups = new ArrayList<String>();
         this.pendingGroups = new ArrayList<String>();
+        this.eventsList = new ArrayList<String>();
+        this.pendingEvents = new ArrayList<String>();
     }
 
-    public User(String frstName, String email, String password, ArrayList<String> groups, ArrayList<String> pendingGroups){
+    public User(String firstName, String email, String password, ArrayList<String> groups, ArrayList<String> pendingGroups){
         this.setEmail(email);
         this.setPassword(password);
         this.setFirstName(firstName);
@@ -39,9 +41,11 @@ public class User {
         else {
             this.pendingGroups = new ArrayList<String>();
         }
+        this.eventsList = new ArrayList<String>();
+        this.pendingEvents = new ArrayList<String>();
     }
 
-    public User(String frstName, String email, String password, ArrayList<String> groups,
+    public User(String firstName, String email, String password, ArrayList<String> groups,
                 ArrayList<String> pendingGroups, ArrayList<String> socialHourEvents,
                 ArrayList<String> pendingEvents){
         this.setEmail(email);
@@ -53,11 +57,26 @@ public class User {
         else {
             this.groups = new ArrayList<String>();
         }
+
         if (pendingGroups != null) {
             this.setPendingGroups(pendingGroups);
         }
         else {
             this.pendingGroups = new ArrayList<String>();
+        }
+
+        if (socialHourEvents != null){
+            this.setEventsList(socialHourEvents);
+        }
+        else {
+            this.eventsList = new ArrayList<String>();
+        }
+
+        if (pendingEvents != null) {
+            this.setPendingEvents(pendingEvents);
+        }
+        else {
+            this.pendingEvents = new ArrayList<String>();
         }
     }
 
@@ -67,7 +86,6 @@ public class User {
         int indexOfAt = email.indexOf("@");
         return email.substring(0, indexOfAt).replace('.', '-');
     }
-
 
     public String getEmail() {
         return email;
@@ -119,5 +137,5 @@ public class User {
 
     public void setPendingEvents(ArrayList<String> eventsList) { this.eventsList = eventsList; }
 
-    public ArrayList<String> getPendingEvents() { return eventsList; }
+    public ArrayList<String> getPendingEvents() { return pendingEvents; }
 }

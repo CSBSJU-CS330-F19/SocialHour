@@ -145,6 +145,33 @@ public class DBConnection {
         dbConnection.db.addValueEventListener(readDB);
     }
 
+    public void acceptEventInvite(String eventID, ArrayList<String> pendingEvents){
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
+                .child("PendingSocialHourEvents").setValue(pendingEvents);
+        ArrayList<String> events = dbConnection.currentUser.getEventsList();
+        if(events == null){
+            events = new ArrayList<>();
+        }
+
+        events.add(eventID);
+        dbConnection.currentUser.setEventsList(events);
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail()))
+                .child("SocialHourEvents").setValue(dbConnection.currentUser.getEventsList());
+
+        ArrayList<String> attendees = (ArrayList<String>) eventDataSnapshot.child(eventID).child("attendees").getValue();
+        attendees.add(User.getUserKey(dbConnection.currentUser.getEmail()));
+        addUserToEvent(eventID, attendees);
+    }
+
+    public void addUserToEvent(String eventID, ArrayList attendees){
+        dbConnection.db.child("Events").child(eventID).child("attendees").setValue(attendees);
+    }
+
+
+    public void declineEventInvite (ArrayList<String> pendingEvents){
+        dbConnection.db.child("Users").child(User.getUserKey(dbConnection.currentUser.getEmail())).child("PendingSocialHourEvents").setValue(pendingEvents);
+    }
+
     public ArrayList<LocalDateTime> getEventStartTimes(String userID){
         DataSnapshot allEvents = dbConnection.userDataSnapshot.child(userID).child("Events");
         ArrayList<LocalDateTime> retList = new ArrayList<>();
@@ -179,9 +206,44 @@ public class DBConnection {
 
     /*add a new event entry into the database*/
     public void addEventToDB(SocialHourEvent newSocialHourEvent){
+
+        String start = newSocialHourEvent.getStartTime().toString();
+        String end = newSocialHourEvent.getEndTime().toString();
+        int oldHours = Integer.parseInt(start.substring(11, 13));
+        if(oldHours < 18) {
+            int newHours = oldHours + 6;
+            String oldHourString = Integer.toString(oldHours);
+            String newHourString = Integer.toString(newHours);
+            if (oldHours < 10) {
+                oldHourString = "0" + oldHourString;
+            }
+            if (newHours < 10) {
+                newHourString = "0" + newHourString;
+            }
+            start = start.replace("T" + oldHourString, "T" + newHourString);
+            start = start.replace("-06:00", "");
+            System.out.println(start);
+            int eOldHours = Integer.parseInt(end.substring(11, 13));
+            int eNewHours = eOldHours + 6;
+            String eOldHourString = Integer.toString(eOldHours);
+            String eNewHourString = Integer.toString(eNewHours);
+            if (eOldHours < 10) {
+                eOldHourString = "0" + eOldHourString;
+            }
+            if (eNewHours < 10) {
+                eNewHourString = "0" + eNewHourString;
+            }
+            end = end.replace("T" + eOldHourString, "T" + eNewHourString);
+            end = end.replace("-06:00", "");
+            System.out.println(end);
+        }
+        else{
+            start = start.replace("-6:00", "");
+            end = end.replace("-6:00", "");
+        }
         dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).setValue(newSocialHourEvent);
-        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).child("StringTimes").child("start").setValue(newSocialHourEvent.getStartTime().toString());
-        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).child("StringTimes").child("end").setValue(newSocialHourEvent.getEndTime().toString());
+        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).child("StringTimes").child("start").setValue(start);
+        dbConnection.db.child("Events").child(newSocialHourEvent.getEventID()).child("StringTimes").child("end").setValue(end);
         ArrayList<String> userEvents = getUserSocialHourEvents(User.getUserKey(currentUser.getEmail()));
         userEvents.add(newSocialHourEvent.getEventID());
         dbConnection.db.child("Users").child(User.getUserKey(currentUser.getEmail())).child("SocialHourEvents").setValue(userEvents);
