@@ -5,10 +5,8 @@ import android.util.Log;
 import com.example.DataTypes.SocialHourEvent;
 import com.example.DataTypes.Group;
 import com.example.DataTypes.User;
+import com.example.socialhour.PendingEvents;
 import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventDateTime;
-import com.google.api.services.calendar.model.Events;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -206,7 +204,6 @@ public class DBConnection {
 
     /*add a new event entry into the database*/
     public void addEventToDB(SocialHourEvent newSocialHourEvent){
-
         String start = newSocialHourEvent.getStartTime().toString();
         String end = newSocialHourEvent.getEndTime().toString();
         int oldHours = Integer.parseInt(start.substring(11, 13));
@@ -268,9 +265,14 @@ public class DBConnection {
         }
     }
 
-    public ArrayList<String> getAllMembersOfGroup(String groupID){
-        ArrayList<String> allMembers = (ArrayList<String>) groupsSnapshot.child(groupID).child("members").getValue();
+    public ArrayList<String> getGroupsEvents(String groupId){
+        ArrayList<String> allMembers = (ArrayList<String>) groupsSnapshot.child(groupId).child("SocialHourEvents").getValue();
         return allMembers;
+    }
+
+    public ArrayList<String> getAllMembersOfGroup(String groupID){
+        ArrayList<String> allEvents = (ArrayList<String>) groupsSnapshot.child(groupID).child("members").getValue();
+        return allEvents;
     }
 
     public ArrayList<String> getUserSocialHourEvents(String userId){
@@ -293,6 +295,25 @@ public class DBConnection {
         ArrayList<String> events = (ArrayList<String>) groupsSnapshot.child(groupId).child("SocialHourEvents").getValue();
         if (events != null)
             return events;
+        else
+            return new ArrayList<String>();
+    }
+
+    public SocialHourEvent getEvent(String eventId){
+        DataSnapshot events = eventDataSnapshot.child(eventId);
+        String eventName = events.child("eventName").getValue(String.class);
+        DateTime start = new DateTime(events.child("StringTimes").child("start").getValue(String.class));
+        DateTime end = new DateTime(events.child("StringTimes").child("end").getValue(String.class));
+        String groupID = events.child("groupId").getValue(String.class);
+        ArrayList<String> attendees = getEventAttendees(eventId);
+        SocialHourEvent s = new SocialHourEvent(eventName, start, end, groupID, eventId, attendees);
+        return s;
+    }
+
+    public ArrayList<String> getEventAttendees(String eventId){
+        ArrayList<String> attendees = (ArrayList<String>) eventDataSnapshot.child(eventId).child("attendees").getValue();
+        if(attendees != null)
+            return attendees;
         else
             return new ArrayList<String>();
     }

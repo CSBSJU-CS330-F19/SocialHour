@@ -56,53 +56,6 @@
             android:orientation="vertical"
             android:id="@+id/linLayout">
 
-            <Button
-                android:id="@+id/textView20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/01/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Button
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/02/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Button
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/03/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Button
-                android:id="@+id/textView23"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/04/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Button
-                android:id="@+id/textView24"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/05/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-            <Button
-                android:id="@+id/textView25"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="10"
-                android:text="Event Name \n 11/06/2019 08:30 PM "
-                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
         </LinearLayout>
     </ScrollView>
 

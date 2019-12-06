@@ -8,11 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.DataTypes.SocialHourEvent;
 import com.example.DataTypes.User;
 import com.example.services.DBConnection;
+import com.example.services.WriteEventToGoogleCalendar;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.CalendarScopes;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AcceptEvent extends AppCompatActivity {
     private Button accept, decline;
@@ -52,6 +60,7 @@ public class AcceptEvent extends AppCompatActivity {
                 ArrayList<String> pendingEvents = dbc.getPendingSocialHourEvents(User.getUserKey(dbc.getCurrentUser().getEmail()));
                 pendingEvents.remove(PendingEvents.selectedEvent);
                 dbc.acceptEventInvite(PendingEvents.selectedEvent, pendingEvents);
+                writeToCal(dbc.getEvent(PendingEvents.selectedEvent));
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
@@ -66,5 +75,14 @@ public class AcceptEvent extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
+    }
+
+    public void writeToCal(SocialHourEvent s){
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null) {
+            GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, Collections.singleton(CalendarScopes.CALENDAR));
+            credential.setSelectedAccount(account.getAccount());
+            new WriteEventToGoogleCalendar(credential, s).execute();
+        }
     }
 }

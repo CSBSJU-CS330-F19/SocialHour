@@ -46,7 +46,8 @@ public class EventsPage extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        final ArrayList<String> events = currentUser.getEventsList();
+        final ArrayList<String> events = dbc.getGroupsEvents(GroupsPage.getSelectedGroup().getId());
+        System.out.println(events.toString());
 
 
         for (int i = 0; i < events.size(); i++) {

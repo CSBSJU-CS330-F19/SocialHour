@@ -132,7 +132,7 @@ public class User {
 
     public ArrayList<String> getEventsList() { return eventsList; }
 
-    public void setPendingEvents(ArrayList<String> eventsList) { this.eventsList = eventsList; }
+    public void setPendingEvents(ArrayList<String> eventsList) { this.pendingEvents = eventsList; }
 
     public ArrayList<String> getPendingEvents() { return pendingEvents; }
 }
