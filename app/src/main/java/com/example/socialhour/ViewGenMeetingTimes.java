@@ -13,10 +13,16 @@ import com.example.DataTypes.Group;
 import com.example.DataTypes.SocialHourEvent;
 import com.example.DataTypes.User;
 import com.example.services.DBConnection;
+import com.example.services.WriteEventToGoogleCalendar;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.util.DateTime;
+import com.google.api.services.calendar.CalendarScopes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 public class ViewGenMeetingTimes extends AppCompatActivity {
@@ -35,6 +41,7 @@ public class ViewGenMeetingTimes extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
         final ArrayList<LocalDateTime> times = InputGenerateMeetingTimes.times;
+
 
         for (int i = 0; i < times.size(); i++){
             final Button button = new Button(this);
@@ -71,6 +78,10 @@ public class ViewGenMeetingTimes extends AppCompatActivity {
 
                     SocialHourEvent newSocialHourEvent = new SocialHourEvent(name, startTime, endTime, groupID, eventID, attendees);
 
+
+                    writeToCal(newSocialHourEvent);
+
+
                     dbc.addEventToDB(newSocialHourEvent);
 
                     startActivity(new Intent(getApplicationContext(), GroupsPage.class));
@@ -79,6 +90,15 @@ public class ViewGenMeetingTimes extends AppCompatActivity {
 
             linearLayout.addView(button);
 
+        }
+    }
+
+    public void writeToCal(SocialHourEvent s){
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null) {
+            GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, Collections.singleton(CalendarScopes.CALENDAR));
+            credential.setSelectedAccount(account.getAccount());
+            new WriteEventToGoogleCalendar(credential, s).execute();
         }
     }
 }
